@@ -1,38 +1,110 @@
-<!-- ================= POPUP MODAL ================= -->
+/* ===========================
+   MODAL
+=========================== */
 
-<div class="modal" id="detailModal">
+.modal{
 
-    <div class="modal-content">
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.65);
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
-        <button class="modal-close" id="closeModal">&times;</button>
+    opacity:0;
+    visibility:hidden;
 
-        <h2 id="modalTitle"></h2>
+    transition:.3s;
 
-        <p>
-            <strong>Jam Operasional</strong><br>
-            <span id="modalHours"></span>
-        </p>
+    z-index:9999;
 
-        <p>
-            <strong>Alamat</strong><br>
-            <span id="modalAddress"></span>
-        </p>
+}
 
-        <p>
-            <strong>Telepon</strong><br>
-            <span id="modalPhone"></span>
-        </p>
+.modal.show{
 
-        <a
-            id="modalMaps"
-            class="btn-primary"
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-            Buka Google Maps
-        </a>
+    opacity:1;
+    visibility:visible;
 
-    </div>
+}
 
-</div>
+.modal-content{
+
+    width:90%;
+    max-width:520px;
+
+    background:#1b1b1b;
+
+    color:#fff;
+
+    border-radius:18px;
+
+    padding:35px;
+
+    position:relative;
+
+    animation:popup .3s ease;
+
+}
+
+@keyframes popup{
+
+    from{
+
+        transform:translateY(30px) scale(.95);
+        opacity:0;
+
+    }
+
+    to{
+
+        transform:translateY(0) scale(1);
+        opacity:1;
+
+    }
+
+}
+
+.modal-content h2{
+
+    margin-bottom:25px;
+
+}
+
+.modal-content p{
+
+    margin-bottom:20px;
+    color:#ddd;
+
+}
+
+.modal-close{
+
+    position:absolute;
+
+    right:20px;
+    top:18px;
+
+    width:40px;
+    height:40px;
+
+    border:none;
+
+    border-radius:50%;
+
+    cursor:pointer;
+
+    font-size:24px;
+
+    background:#ffb347;
+
+    color:#111;
+
+}
+
+.modal-close:hover{
+
+    transform:rotate(90deg);
+
+    transition:.3s;
+
+}
