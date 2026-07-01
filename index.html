@@ -120,7 +120,7 @@
         .work-mode .info-row i { color: #846244; }
         .party-mode .info-row i { color: #ff2a74; filter: drop-shadow(0 0 5px rgba(255,42,116,0.5)); }
         
-        .time-block { background: rgba(0,0,0,0.03); padding: 12px 16px; border-radius: 12px; font-size: 0.88rem; margin-top: 6px; font-weight: 500; line-height: 1.5; }
+        .time-block { background: rgba(0,0,0,0.03); padding: 14px 18px; border-radius: 12px; font-size: 0.9rem; margin-top: 6px; font-weight: 500; line-height: 1.6; }
         .party-mode .time-block { background: rgba(255,255,255,0.04); }
 
         /* ADVANCED MULTIMEDIA STREAM WIDGET */
@@ -146,8 +146,10 @@
 </head>
 <body>
 
+    <!-- CORE MULTIMEDIA ENGINE -->
     <audio id="bgMusic" loop></audio>
 
+    <!-- IMMERSIVE WELCOME SCREEN -->
     <div class="welcome-screen" id="welcomeScreen">
         <h1>Semarang Space <span>Discovery</span></h1>
         <p class="welcome-tagline">Portal Informasi Spasial Digital Eksklusif Kota Semarang. Temukan sudut ternyaman pendorong produktivitas nugas atau pusat hiburan malam paling ikonis.</p>
@@ -156,16 +158,17 @@
             <div class="choice-card work-choice" onclick="selectInitialMode('work')">
                 <i class="fa-solid fa-laptop-code"></i>
                 <h3>Coffee Shop & WFC Hub</h3>
-                <p>Ekosistem 10 ruang nugas estetik penunjang produktivitas lengkap dengan parameter colokan & stabilitas Wi-Fi.</p>
+                <p>Ekosistem ruang nugas penunjang produktivitas lengkap dengan parameter kelengkapan fasilitas teknis dan stabilitas Wi-Fi.</p>
             </div>
             <div class="choice-card party-choice" onclick="selectInitialMode('party')">
                 <i class="fa-solid fa-bolt"></i>
                 <h3>Nightlife & Entertainment</h3>
-                <p>Akses informasi 7 pusat hiburan malam, club eksklusif, live house, dan lounge terpopuler kota.</p>
+                <p>Akses informasi pusat hiburan malam, club eksklusif, live house, dan lounge terpopuler kota.</p>
             </div>
         </div>
     </div>
 
+    <!-- DYNAMIC CORE CONTAINER -->
     <div class="main-content-section" id="mainContentSection">
         <nav class="main-navbar">
             <div class="nav-logo">SMG SPACE HUB</div>
@@ -192,6 +195,7 @@
             <div class="grid" id="cardGrid"></div>
         </main>
 
+        <!-- MULTIMEDIA INTERACTIVE CONTROLLER -->
         <div class="audio-player-widget">
             <button class="play-btn" onclick="toggleMusic()"><i class="fa-solid fa-play" id="playIcon"></i></button>
             <span style="font-size: 0.78rem; font-weight: 700; color: #fff; letter-spacing: 0.5px;" id="trackName">AUDIO CONTROLLER</span>
@@ -203,6 +207,7 @@
         </footer>
     </div>
 
+    <!-- OBJECT DATA DETAILS MODAL -->
     <div class="modal-overlay" id="detailModal" onclick="closeModal(event)">
         <div class="modal-box">
             <button class="modal-close" onclick="closeDetail()">&times;</button>
@@ -213,7 +218,7 @@
                 <h2 id="modalTitle"></h2>
                 <div class="info-section">
                     <div class="info-row"><i class="fa-solid fa-location-dot"></i> <div><strong>Alamat Lengkap:</strong><br><span id="modalAddr"></span></div></div>
-                    <div class="info-row"><i class="fa-solid fa-clock"></i> <div><strong>Jam Operasional Per Hari:</strong><div class="time-block" id="modalTime"></div></div></div>
+                    <div class="info-row"><i class="fa-solid fa-clock"></i> <div><strong>Jam Operasional Detil:</strong><div class="time-block" id="modalTime"></div></div></div>
                     <div class="info-row"><i class="fa-solid fa-phone"></i> <div><strong>Nomor Telepon:</strong><br><span id="modalPhone"></span></div></div>
                     <div class="info-row"><i class="fa-solid fa-wallet"></i> <div><strong>Kisaran Harga Menu:</strong><br><span id="modalPrice"></span></div></div>
                     <div class="info-row"><i class="fa-solid fa-wifi"></i> <div><strong>Konektivitas Wi-Fi & Fasilitas:</strong><br><span id="modalWifi"></span></div></div>
@@ -222,6 +227,7 @@
         </div>
     </div>
 
+    <!-- DEVELOPER METADATA MODAL -->
     <div class="modal-overlay" id="aboutModal" onclick="closeModal(event)">
         <div class="modal-box" style="padding: 45px; text-align: center;">
             <button class="modal-close" onclick="closeAbout()">&times;</button>
@@ -234,33 +240,124 @@
     </div>
 
     <script>
-        // MULTIMEDIA SOURCE RESOLUTION (LOCAL VERBATIM STORAGE)
+        // CORE MULTIMEDIA AUDIO MATRIX
         const audioTracks = {
             work: "cafe.mpeg",
             party: "party.mpeg"
         };
 
+        // DATABASE UTAMA - DATETIME PER HARI & LINK ELEMEN MULTIMEDIA
         const contentData = {
             work: [
-                { name: "ARAH Coffee Heritage", addr: "Jl. Cendrawasih No. 40, Purwodinatan, Kec. Semarang Tengah, Kota Semarang, Jawa Tengah 50137", time: "Senin - Minggu: 24 Jam Nonstop Penuh", phone: "+62 811-1916-1005", price: "Minuman & Kopi: Rp23.000 – Rp45.000", wifi: "Tersedia Premium (Free Wi-Fi Kecepatan Tinggi)", tag: "Kota Lama", image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=500" },
-                { name: "Kayo Coffee and Eatery", addr: "Jl. Melati Selatan No. 8A, Brumbungan, Kec. Semarang Tengah, Kota Semarang, Jawa Tengah 50135", time: "Senin - Minggu: 09.00 - 00.00 WIB", phone: "+62 821-7369-2019", price: "Kopi: Rp18k - Rp30k | Makanan Berat: Rp25k - Rp50k", wifi: "Tersedia (Koneksi Stabil, Meja Kerja Luas & Banyak Colokan)", tag: "Semarang Tengah", image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=500" },
-                { name: "Lupa Waktu Coffee", addr: "Jl. Banyu Putih Raya, Tembalang, Kec. Tembalang, Kota Semarang, Jawa Tengah 50275", time: "Senin - Minggu: 24 Jam Penuh", phone: "+62 851-1780-5576", price: "Kopi & Minuman: Rp12.000 – Rp20.000 (Sangat Ramah Kantong Mahasiswa)", wifi: "Tersedia (Koneksi Khusus Belajar/Begadang Tugas)", tag: "Tembalang", image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=500" },
-                { name: "Celcio Coffee", addr: "Jl. Sumbing No. IV, Gajahmungkur, Kec. Gajahmungkur, Kota Semarang, Jawa Tengah 50232", time: "Senin - Minggu: 12.00 - 00.00 WIB", phone: "+62 823-1493-0070", price: "Minuman: Rp18k - Rp38k | Makanan: Rp28k - Rp51k", wifi: "Tersedia (Akses Internet Cepat & Suasana Sangat Hening)", tag: "Gajahmungkur", image: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?q=80&w=500" },
-                { name: "Anantari Coffee", addr: "Jl. Jangli Gabeng, Kec. Tembalang, Kota Semarang, Jawa Tengah 50274", time: "Senin - Minggu: 10.00 - 00.00 WIB", phone: "+62 821-3575-9015", price: "Menu Makanan & Kopi: Rp25.000 - Rp60.000", wifi: "Tersedia (Jangkauan Sinyal Luas Area Outdoor & View Kota)", tag: "Tembalang View", image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=500" },
-                { name: "Kopitagram - Dr. Cipto", addr: "Jl. Dokter Cipto No. 111, Sarirejo, Kec. Semarang Timur, Kota Semarang, Jawa Tengah 50124", time: "Senin - Minggu: 08.00 - 02.00 WIB", phone: "+62 877-8077-4318", price: "Kopi & Kudapan Premium: Rp30.000 - Rp50.000", wifi: "Tersedia (Sangat Cepat, Kuat untuk Upload/Coding/Streaming)", tag: "Semarang Timur", image: "https://images.unsplash.com/photo-1521017432531-fbd92d768814?q=80&w=500" },
-                { name: "Domestik Coffee", addr: "Jl. Menteri Supeno No. 38, Mugassari, Kec. Semarang Selatan, Kota Semarang, Jawa Tengah 50249", time: "Senin - Minggu: 06.00 - 23.00 WIB", phone: "+62 851-7960-1868", price: "Menu Standar: Rp20.000 - Rp50.000", wifi: "Tersedia (Akses Lancar, Lokasi Strategis Tengah Kota)", tag: "Taman KB", image: "https://images.unsplash.com/photo-1463796113310-bf9653b19c2a?q=80&w=500" },
-                { name: "Dromma Coffee", addr: "Jl. Gajahmada No. 63, Kembangsari, Kec. Semarang Tengah, Kota Semarang, Jawa Tengah 50133", time: "Senin - Minggu: 08.00 - 22.00 WIB", phone: "+62 812-1712-1319", price: "Kopi Spesialti: Rp25.000 - Rp45.000", wifi: "Tersedia (Internet Kuat Khusus Meeting/Remote Work)", tag: "Gajahmada", image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=500" },
-                { name: "Djournal Coffee", addr: "The Park Mall Semarang, Jl. Madukoro Raya, Kec. Semarang Barat, Kota Semarang, Jawa Tengah 50144", time: "Senin - Minggu: 10.00 - 22.00 WIB (Sesuai Jam Mall)", phone: "Hubungi Informasi Mall", price: "Coffee & Bakery Premium: Rp35.000 - Rp60.000", wifi: "Tersedia (Akses Jaringan Stabil Tenant Premium)", tag: "Semarang Barat", image: "https://images.unsplash.com/photo-1497551060073-4c5ab6435f12?q=80&w=500" },
-                { name: "Dirasa Kopi", addr: "Kawasan Kelurahan Gajahmungkur, Kec. Gajahmungkur, Kota Semarang, Jawa Tengah 50232", time: "Senin - Minggu: 24 Jam Uninterrupted Nonstop", phone: "+62 812-2728-2527", price: "Kopi Ekonomis: Rp15.000 - Rp25.000", wifi: "Tersedia (Free Akses Internet, Ramah Dompet Akhir Bulan)", tag: "24 Jam Nonstop", image: "https://images.unsplash.com/photo-1507133750040-4a8f57021571?q=80&w=500" }
+                { 
+                    name: "ARAH Coffee Heritage", 
+                    addr: "Jl. Cendrawasih No. 40, Purwodinatan, Kec. Semarang Tengah, Kota Semarang, Jawa Tengah 50137", 
+                    time: "Senin: 24 Jam<br>Selasa: 24 Jam<br>Rabu: 24 Jam<br>Kamis: 24 Jam<br>Jumat: 24 Jam<br>Sabtu: 24 Jam<br>Minggu: 24 Jam", 
+                    phone: "+62 811-1916-1005", 
+                    price: "Rp 23.000 – Rp 45.000", 
+                    wifi: "Premium High-Speed (Sangat Stabil untuk Work From Cafe)", 
+                    tag: "Kota Lama", 
+                    image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=500" 
+                },
+                { 
+                    name: "Kayo Coffee and Eatery", 
+                    addr: "Jl. Melati Selatan No. 8A, Brumbungan, Kec. Semarang Tengah, Kota Semarang, Jawa Tengah 50135", 
+                    time: "Senin - Kamis: 09.00 - 23.00 WIB<br>Jumat - Minggu: 09.00 - 00.00 WIB", 
+                    phone: "+62 821-7369-2019", 
+                    price: "Rp 18.000 - Rp 50.000", 
+                    wifi: "Tersedia Dedikasi Akses & Banyak Port Listrik", 
+                    tag: "Semarang Tengah", 
+                    image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=500" 
+                },
+                { 
+                    name: "Lupa Waktu Coffee", 
+                    addr: "Jl. Banyu Putih Raya, Tembalang, Kec. Tembalang, Kota Semarang, Jawa Tengah 50275", 
+                    time: "Senin: 24 Jam<br>Selasa: 24 Jam<br>Rabu: 24 Jam<br>Kamis: 24 Jam<br>Jumat: 24 Jam<br>Sabtu: 24 Jam<br>Minggu: 24 Jam", 
+                    phone: "+62 851-1780-5576", 
+                    price: "Rp 12.000 – Rp 20.000", 
+                    wifi: "Tersedia Bandwidth Khusus Mahasiswa / Begadang Tugas", 
+                    tag: "Tembalang", 
+                    image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=500" 
+                },
+                { 
+                    name: "Celcio Coffee", 
+                    addr: "Jl. Sumbing No. IV, Gajahmungkur, Kec. Gajahmungkur, Kota Semarang, Jawa Tengah 50232", 
+                    time: "Senin - Jumat: 12.00 - 23.00 WIB<br>Sabtu - Minggu: 12.00 - 00.00 WIB", 
+                    phone: "+62 823-1493-0070", 
+                    price: "Rp 18.000 - Rp 51.000", 
+                    wifi: "Tersedia Akses Internet Hening & Kondusif", 
+                    tag: "Gajahmungkur", 
+                    image: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?q=80&w=500" 
+                },
+                { 
+                    name: "Anantari Coffee", 
+                    addr: "Jl. Jangli Gabeng, Kec. Tembalang, Kota Semarang, Jawa Tengah 50274", 
+                    time: "Senin - Kamis: 11.00 - 23.00 WIB<br>Jumat - Minggu: 10.00 - 00.00 WIB", 
+                    phone: "+62 821-3575-9015", 
+                    price: "Rp 25.000 - Rp 60.000", 
+                    wifi: "Outdoor & Indoor Area Connected WiFi", 
+                    tag: "Tembalang View", 
+                    image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=500" 
+                },
+                { 
+                    name: "Kopitagram - Dr. Cipto", 
+                    addr: "Jl. Dokter Cipto No. 111, Sarirejo, Kec. Semarang Timur, Kota Semarang, Jawa Tengah 50124", 
+                    time: "Senin - Jumat: 08.00 - 00.00 WIB<br>Sabtu - Minggu: 08.00 - 02.00 WIB", 
+                    phone: "+62 877-8077-4318", 
+                    price: "Rp 30.000 - Rp 50.000", 
+                    wifi: "High-Speed Access Kuat untuk Upload & Coding", 
+                    tag: "Semarang Timur", 
+                    image: "https://images.unsplash.com/photo-1521017432531-fbd92d768814?q=80&w=500" 
+                },
+                { 
+                    name: "Domestik Coffee", 
+                    addr: "Jl. Menteri Supeno No. 38, Mugassari, Kec. Semarang Selatan, Kota Semarang, Jawa Tengah 50249", 
+                    time: "Senin - Kamis: 07.00 - 22.00 WIB<br>Jumat - Minggu: 06.00 - 23.00 WIB", 
+                    phone: "+62 851-7960-1868", 
+                    price: "Rp 20.000 - Rp 50.000", 
+                    wifi: "Koneksi Cepat Area Strategis Tengah Kota", 
+                    tag: "Taman KB", 
+                    image: "https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=500"
+                },
+                { 
+                    name: "Dromma Coffee", 
+                    addr: "Jl. Gajahmada No. 63, Kembangsari, Kec. Semarang Tengah, Kota Semarang, Jawa Tengah 50133", 
+                    time: "Senin - Jumat: 08.00 - 21.00 WIB<br>Sabtu - Minggu: 08.00 - 22.00 WIB", 
+                    phone: "+62 812-1712-1319", 
+                    price: "Rp 25.000 - Rp 45.000", 
+                    wifi: "Dedicated Network untuk Remote Meeting", 
+                    tag: "Gajahmada", 
+                    image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=500" 
+                },
+                { 
+                    name: "Djournal Coffee", 
+                    addr: "The Park Mall Semarang, Jl. Madukoro Raya, Kec. Semarang Barat, Kota Semarang, Jawa Tengah 50144", 
+                    time: "Senin - Kamis: 10.00 - 21.00 WIB<br>Jumat - Minggu: 10.00 - 22.00 WIB (Mengikuti Jam Mall)", 
+                    phone: "Hubungi Customer Service Mall", 
+                    price: "Rp 35.000 - Rp 60.000", 
+                    wifi: "Tersedia Jaringan Kecepatan Tinggi Tenant Premium", 
+                    tag: "Semarang Barat", 
+                    image: "https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=500"
+                },
+                { 
+                    name: "Dirasa Kopi", 
+                    addr: "Kawasan Kelurahan Gajahmungkur, Kec. Gajahmungkur, Kota Semarang, Jawa Tengah 50232", 
+                    time: "Senin: 24 Jam<br>Selasa: 24 Jam<br>Rabu: 24 Jam<br>Kamis: 24 Jam<br>Jumat: 24 Jam<br>Sabtu: 24 Jam<br>Minggu: 24 Jam", 
+                    phone: "+62 812-2728-2527", 
+                    price: "Rp 15.000 - Rp 25.000", 
+                    wifi: "Free WiFi 24 Jam Penuh", 
+                    tag: "24 Jam Nonstop", 
+                    image: "https://images.unsplash.com/photo-1507133750040-4a8f57021571?q=80&w=500" 
+                }
             ],
             party: [
-                { name: "Soci Club", addr: "Jl. Anjasmoro Raya E1 No. 8, Tawangsari, Kec. Semarang Barat, Kota Semarang, Jawa Tengah 50144", time: "Senin - Minggu: 21.00 - 04.00 WIB", phone: "+62 822-8111-3336", price: "HTM / Open Bottle: Mulai dari Rp100.000+", wifi: "Tersedia Akses Jaringan Wi-Fi", tag: "Mega Club", image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=500" },
-                { name: "Pots Bar", addr: "Jl. Tri Lomba Juang No. 5, Mugassari, Kec. Semarang Selatan, Kota Semarang, Jawa Tengah 50249", time: "Senin - Minggu: 18.00 - 03.00 WIB", phone: "+62 811-267-1413", price: "Cocktails & Beer: Rp90.000+", wifi: "Tersedia Akses Wi-Fi", tag: "Intimate Bar", image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=500" },
-                { name: "HW Tiger Club", addr: "Kawasan Kota Lama, Jl. Cendrawasih No. 24, Purwodinatan, Kec. Semarang Tengah, Kota Semarang, Jawa Tengah 50137", time: "Senin - Minggu: 20.00 - 03.00 WIB", phone: "+62 811-1624-898", price: "Premium Table Minimum Charge Applies", wifi: "Tersedia Akses Jaringan", tag: "Elite Clubbing", image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=500" },
-                { name: "HW Live House", addr: "Kawasan Kota Lama, Jl. Cendrawasih No. 24, Purwodinatan, Kec. Semarang Tengah, Kota Semarang, Jawa Tengah 50137", time: "Senin - Minggu: 21.00 - 04.00 WIB", phone: "+62 811-1624-898", price: "Paket Minuman / Sistem Event Promo", wifi: "Tersedia Jaringan Akses", tag: "Live Music Stage", image: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=500" },
-                { name: "Red Hare Bar", addr: "Jl. Imam Bonjol No. 148, Pindrikan Lor, Kec. Semarang Tengah, Kota Semarang, Jawa Tengah 50131", time: "Senin - Minggu: 17.00 - 03.30 WIB", phone: "+62 811-2888-670", price: "F&B Premium Cocktails: Rp80.000+", wifi: "Tersedia Akses Wi-Fi", tag: "Oriental Bar", image: "https://images.unsplash.com/photo-1511105612665-45120cd4ee31?q=80&w=500" },
-                { name: "Helen’s Night Mart", addr: "Jl. Diponegoro No. 22A, Tegalsari, Kec. Semarang Selatan, Kota Semarang, Jawa Tengah 50251", time: "Senin - Minggu: 20.00 - 04.00 WIB", phone: "+62 811-1624-898", price: "Beer & Premium Snack Mart: Rp40.000+", wifi: "Tersedia Akses Jaringan", tag: "Casual Night Mart", image: "https://images.unsplash.com/photo-1543007630-9710e4a00a20?q=80&w=500" },
-                { name: "ONYX.ENT", addr: "Jl. Permata Hijau BB No. 25, Kuningan, Kec. Semarang Utara, Kota Semarang, Jawa Tengah 50176", time: "Senin - Minggu: 19.00 - 03.00 WIB", phone: "+62 811-2889-1212", price: "Karaoke Room & Premium Lounge Service", wifi: "Tersedia Akses Wi-Fi", tag: "Entertainment KTV", image: "https://images.unsplash.com/photo-1545128485-c400e7702796?q=80&w=500" }
+                { name: "Soci Club", addr: "Jl. Anjasmoro Raya E1 No. 8, Tawangsari, Kec. Semarang Barat, Kota Semarang, Jawa Tengah 50144", time: "Senin - Minggu: 21.00 - 04.00 WIB", phone: "+62 822-8111-3336", price: "Mulai dari Rp 100.000+", wifi: "Tersedia Akses Wi-Fi Jaringan", tag: "Mega Club", image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=500" },
+                { name: "Pots Bar", addr: "Jl. Tri Lomba Juang No. 5, Mugassari, Kec. Semarang Selatan, Kota Semarang, Jawa Tengah 50249", time: "Senin - Minggu: 18.00 - 03.00 WIB", phone: "+62 811-267-1413", price: "Mulai dari Rp 90.000+", wifi: "Tersedia Akses Wi-Fi Jaringan", tag: "Intimate Bar", image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=500" },
+                { name: "HW Tiger Club", addr: "Kawasan Kota Lama, Jl. Cendrawasih No. 24, Purwodinatan, Kec. Semarang Tengah, Kota Semarang, Jawa Tengah 50137", time: "Senin - Minggu: 20.00 - 03.00 WIB", phone: "+62 811-1624-898", price: "Minimum Charge Berlaku", wifi: "Tersedia Akses Wi-Fi Jaringan", tag: "Elite Clubbing", image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=500" },
+                { name: "HW Live House", addr: "Kawasan Kota Lama, Jl. Cendrawasih No. 24, Purwodinatan, Kec. Semarang Tengah, Kota Semarang, Jawa Tengah 50137", time: "Senin - Minggu: 21.00 - 04.00 WIB", phone: "+62 811-1624-898", price: "Sistem Paket Menu / Event Promo", wifi: "Tersedia Akses Wi-Fi Jaringan", tag: "Live Music Stage", image: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=500" },
+                { name: "Red Hare Bar", addr: "Jl. Imam Bonjol No. 148, Pindrikan Lor, Kec. Semarang Tengah, Kota Semarang, Jawa Tengah 50131", time: "Senin - Minggu: 17.00 - 03.30 WIB", phone: "+62 811-2888-670", price: "Mulai dari Rp 80.000+", wifi: "Tersedia Akses Wi-Fi Jaringan", tag: "Oriental Bar", image: "https://images.unsplash.com/photo-1511105612665-45120cd4ee31?q=80&w=500" },
+                { name: "Helen’s Night Mart", addr: "Jl. Diponegoro No. 22A, Tegalsari, Kec. Semarang Selatan, Kota Semarang, Jawa Tengah 50251", time: "Senin - Minggu: 20.00 - 04.00 WIB", phone: "+62 811-1624-898", price: "Mulai dari Rp 40.000+", wifi: "Tersedia Akses Wi-Fi Jaringan", tag: "Casual Night Mart", image: "https://images.unsplash.com/photo-1543007630-9710e4a00a20?q=80&w=500" },
+                { name: "ONYX.ENT", addr: "Jl. Permata Hijau BB No. 25, Kuningan, Kec. Semarang Utara, Kota Semarang, Jawa Tengah 50176", time: "Senin - Minggu: 19.00 - 03.00 WIB", phone: "+62 811-2889-1212", price: "Sesuai Room Pemesanan Karaoke", wifi: "Tersedia Akses Wi-Fi Jaringan", tag: "Entertainment KTV", image: "https://images.unsplash.com/photo-1545128485-c400e7702796?q=80&w=500" }
             ]
         };
 
@@ -275,20 +372,23 @@
             document.body.className = mode + "-mode";
             applyTheme();
             render();
+            
             audio.src = audioTracks[mode];
+            audio.load(); 
         }
 
         function switchMode() {
-            // Efek transisi antar-container
             document.getElementById("cardGrid").style.opacity = "0";
             setTimeout(() => {
                 mode = mode === "work" ? "party" : "work";
                 document.body.className = mode + "-mode";
                 applyTheme();
                 render();
+                
                 audio.src = audioTracks[mode];
+                audio.load();
                 if (playing) {
-                    audio.play().catch(e => console.log("Interaksi tertahan kebijakan browser"));
+                    audio.play().catch(e => console.log("Audio Stream Error: Mode switch interaction interrupted."));
                 }
                 updateUI();
                 document.getElementById("cardGrid").style.opacity = "1";
@@ -300,11 +400,11 @@
             if (mode === "work") {
                 btn.innerHTML = "<i class='fa-solid fa-moon'></i> Mode Party";
                 document.getElementById("heroTitle").innerHTML = "Semarang <span>WFC Hub</span>";
-                document.getElementById("heroTagline").innerText = "Koleksi workstation komunal, kedai kopi tenang, dan space ternyaman pendorong fokus tugas kuliah.";
+                document.getElementById("heroTagline").innerText = "Sistem navigasi spasial area kerja komunal, fasilitas penunjang produktivitas, dan stabilitas konektivitas digital.";
             } else {
                 btn.innerHTML = "<i class='fa-solid fa-sun'></i> Mode Kerja";
                 document.getElementById("heroTitle").innerHTML = "Semarang <span>After Dark</span>";
-                document.getElementById("heroTagline").innerText = "Panduan terpadu pusat hiburan, panggung musik, live house, dan destinasi melepas penat malam hari.";
+                document.getElementById("heroTagline").innerText = "Direktori spasial pusat rekreasi malam, panggung musik live, dan ruang hiburan perkotaan.";
             }
         }
 
@@ -314,16 +414,16 @@
             const filtered = contentData[mode].filter(i => i.name.toLowerCase().includes(search.toLowerCase()));
             
             if(filtered.length === 0) {
-                grid.innerHTML = `<div style='grid-column: 1/-1; text-align: center; padding: 60px; opacity: 0.5; font-weight:600;'>Koleksi data lokasi tidak ditemukan.</div>`;
+                grid.innerHTML = `<div style='grid-column: 1/-1; text-align: center; padding: 60px; opacity: 0.5; font-weight:600;'>Data spasial lokasi tidak ditemukan.</div>`;
                 return;
             }
 
             filtered.forEach((item) => {
                 const idx = contentData[mode].findIndex(x => x.name === item.name);
                 grid.innerHTML += `
-                    <div class="card" onclick="openDetail('${mode}', ${idx})">
+                    <div class="card" onclick="openDetail('${mode}', ${idx})" style="box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
                         <div class="card-img-wrapper">
-                            <img src="${item.image}" class="card-img" alt="${item.name}">
+                            <img src="${item.image}" class="card-img" alt="${item.name}" onerror="this.src='https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=500'">
                         </div>
                         <div class="card-body">
                             <h3>${item.name}</h3>
@@ -341,7 +441,7 @@
             document.getElementById("modalTitle").innerText = item.name;
             document.getElementById("modalImg").src = item.image;
             document.getElementById("modalAddr").innerText = item.addr;
-            document.getElementById("modalTime").innerText = item.time;
+            document.getElementById("modalTime").innerHTML = item.time; 
             document.getElementById("modalPhone").innerText = item.phone;
             document.getElementById("modalPrice").innerText = item.price;
             document.getElementById("modalWifi").innerText = item.wifi;
@@ -377,7 +477,15 @@
 
         function toggleMusic() {
             playing = !playing;
-            playing ? audio.play().catch(e => playing = false) : audio.pause();
+            if (playing) {
+                audio.play().catch(e => {
+                    console.log("Playback blocked by browser policy");
+                    playing = false;
+                    updateUI();
+                });
+            } else {
+                audio.pause();
+            }
             updateUI();
         }
 
