@@ -482,7 +482,6 @@
 
     <!-- 2. OPENING HERO SECTION -->
     <section id="hero">
-        <!-- Background Video Placeholder - Ganti URL video jika diinginkan -->
         <video class="video-bg" autoplay muted loop playsinline>
             <source src="https://assets.mixkit.co/videos/preview/mixkit-city-lights-at-night-extended-shot-41716-large.mp4" type="video/mp4">
         </video>
@@ -538,37 +537,20 @@
                 </div>
             </div>
 
-            <!-- Directory Cards Grid Grid Layout -->
+            <!-- Directory Cards Grid Layout -->
             <div class="row" id="cards-grid">
                 <!-- Javascript will inject data directly here inside -->
             </div>
         </section>
 
-        <!-- 4. MULTIMEDIA SECTION (GALLERY SLIDER) -->
+        <!-- 4. MULTIMEDIA SECTION (DYNAMIC ACCORDING TO MODE) -->
         <section id="gallery" class="py-5" style="background-color: rgba(0,0,0,0.02);">
             <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Aesthetic Space</h2>
+                <h2 class="section-title" id="gallery-title" data-aos="fade-up">Aesthetic Space</h2>
                 
                 <div class="swiper mySwiper" data-aos="fade-up" data-aos-delay="200">
-                    <div class="swiper-wrapper">
-                        <!-- Pulling exactly from your repository files screenshot -->
-                        <div class="swiper-slide"><img src="Anantari Coffee.jpeg" alt="Anantari Coffee"></div>
-                        <div class="swiper-slide"><img src="Arah Coffee.jpeg" alt="Arah Coffee"></div>
-                        <div class="swiper-slide"><img src="Celcio Coffee.jpeg" alt="Celcio Coffee"></div>
-                        <div class="swiper-slide"><img src="Dirasa Kopi.jpeg" alt="Dirasa Kopi"></div>
-                        <div class="swiper-slide"><img src="Djournal Coffee.jpeg" alt="Djournal Coffee"></div>
-                        <div class="swiper-slide"><img src="Domestik Coffee.jpeg" alt="Domestik Coffee"></div>
-                        <div class="swiper-slide"><img src="Dromma Coffee.jpeg" alt="Dromma Coffee"></div>
-                        <div class="swiper-slide"><img src="Kayo Coffee.jpeg" alt="Kayo Coffee"></div>
-                        <div class="swiper-slide"><img src="Kopitagram.jpeg" alt="Kopitagram"></div>
-                        <div class="swiper-slide"><img src="Lupa Waktu.jpeg" alt="Lupa Waktu"></div>
-                        <div class="swiper-slide"><img src="Helen's.jpeg" alt="Helen's"></div>
-                        <div class="swiper-slide"><img src="Live House.jpeg" alt="Live House"></div>
-                        <div class="swiper-slide"><img src="ONYX.ENT.jpeg" alt="ONYX"></div>
-                        <div class="swiper-slide"><img src="Pots Bar.jpeg" alt="Pots Bar"></div>
-                        <div class="swiper-slide"><img src="Red Hare Bar.jpeg" alt="Red Hare Bar"></div>
-                        <div class="swiper-slide"><img src="Soci Club.jpeg" alt="Soci Club"></div>
-                        <div class="swiper-slide"><img src="Tiger Club.jpeg" alt="Tiger Club"></div>
+                    <div class="swiper-wrapper" id="swiper-wrapper-gallery">
+                        <!-- Dynamic Slider Content Injected via JavaScript -->
                     </div>
                     <div class="swiper-pagination"></div>
                 </div>
@@ -746,6 +728,24 @@
             }
         ];
 
+        // PREMIUM UN-SPLASH HIGHLIGHT RANDOM CURATED GALLERIES 
+        const galleryDatabase = {
+            coffee: [
+                "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=600",
+                "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=600",
+                "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=600",
+                "https://images.unsplash.com/photo-1453614512568-c4024d13c247?q=80&w=600",
+                "https://images.unsplash.com/photo-1521017432531-fbd92d768814?q=80&w=600"
+            ],
+            party: [
+                "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=600",
+                "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=600",
+                "https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=600",
+                "https://images.unsplash.com/photo-1545128485-c400e7702796?q=80&w=600",
+                "https://images.unsplash.com/photo-1574391884720-bbc3740c59d1?q=80&w=600"
+            ]
+        };
+
         let currentMode = 'coffee';
         let activeFilters = [];
         let isAudioPlaying = false;
@@ -768,7 +768,7 @@
                     document.getElementById('audio-widget').style.display = 'flex';
                     // Reinitialize components
                     AOS.init({ duration: 1000, once: true });
-                    initSwiper();
+                    updateDynamicGallerySlider();
                 }, 1000);
             }, 1200);
         });
@@ -800,17 +800,20 @@
             
             const body = document.body;
             const title = document.getElementById('dir-title');
+            const galleryTitle = document.getElementById('gallery-title');
             const btnCoffee = document.getElementById('btn-coffee-mode');
             const btnParty = document.getElementById('btn-party-mode');
 
             if(mode === 'coffee') {
                 body.classList.remove('nightlife-mode');
                 title.textContent = "Hidden Coffee";
+                galleryTitle.textContent = "Aesthetic Warm Spaces";
                 btnCoffee.classList.add('active');
                 btnParty.classList.remove('active');
             } else {
                 body.classList.add('nightlife-mode');
                 title.textContent = "Nightlife Spot";
+                galleryTitle.textContent = "Nocturnal Vibe Spaces";
                 btnParty.classList.add('active');
                 btnCoffee.classList.remove('active');
             }
@@ -818,6 +821,7 @@
             playAppropriateAudio();
             generateFilterChips();
             renderCards();
+            updateDynamicGallerySlider();
         }
 
         // Multimedia Embedded Audio Controllers
@@ -861,7 +865,6 @@
             const container = document.getElementById('filter-chips-container');
             container.innerHTML = '';
             
-            // Collect unique tags depending on selected system type
             let tags = [];
             placesData.filter(p => p.type === currentMode).forEach(item => {
                 item.tags.forEach(t => { if(!tags.includes(t)) tags.push(t); });
@@ -898,12 +901,10 @@
 
             let filtered = placesData.filter(place => place.type === currentMode);
 
-            // Filtering Text Search Query
             if(searchQuery) {
                 filtered = filtered.filter(p => p.name.toLowerCase().includes(searchQuery) || p.area.toLowerCase().includes(searchQuery));
             }
 
-            // Filtering Multi-Checkbox Systems
             if(activeFilters.length > 0) {
                 filtered = filtered.filter(p => activeFilters.every(f => p.tags.includes(f)));
             }
@@ -914,7 +915,6 @@
             }
 
             filtered.forEach(place => {
-                // Formatting exact signature requirement
                 const primaryTag = place.tags.includes("24 Jam") ? "24 Jam" : place.hours.split(' ')[1] || "Open Night";
                 const focusVibe = place.tags.includes("Banyak Colokan") || place.tags.includes("WiFi") ? "WFC Friendly" : place.tags[0];
 
@@ -939,6 +939,44 @@
             });
         }
 
+        // Dynamic Swiper Slider Generator based on current platform type
+        let swiperInstance = null;
+        function updateDynamicGallerySlider() {
+            const wrapper = document.getElementById('swiper-wrapper-gallery');
+            wrapper.innerHTML = '';
+
+            // Pull curated specific array images from list
+            const currentGalleryImages = galleryDatabase[currentMode];
+
+            currentGalleryImages.forEach(imgUrl => {
+                const slideHTML = `
+                    <div class="swiper-slide">
+                        <img src="${imgUrl}" alt="Aesthetic Space Showcase">
+                    </div>
+                `;
+                wrapper.innerHTML += slideHTML;
+            });
+
+            // Initialize or Rebuild Swiper Layout Engine
+            if (swiperInstance) swiperInstance.destroy(true, true);
+            
+            swiperInstance = new Swiper(".mySwiper", {
+                effect: "coverflow",
+                grabCursor: true,
+                centeredSlides: true,
+                slidesPerView: "auto",
+                coverflowEffect: {
+                    rotate: 15,
+                    stretch: 0,
+                    depth: 100,
+                    modifier: 1,
+                    slideShadows: true,
+                },
+                pagination: { el: ".swiper-pagination", clickable: true },
+                loop: true
+            });
+        }
+
         // Modal Data Injections Layout
         const bootstrapModal = new bootstrap.Modal(document.getElementById('detailModal'));
         function openDetailModal(id) {
@@ -957,28 +995,7 @@
             bootstrapModal.show();
         }
 
-        // Swiper Gallery System Components
-        let swiperInstance = null;
-        function initSwiper() {
-            if(swiperInstance) swiperInstance.destroy();
-            swiperInstance = new Swiper(".mySwiper", {
-                effect: "coverflow",
-                grabCursor: true,
-                centeredSlides: true,
-                slidesPerView: "auto",
-                coverflowEffect: {
-                    rotate: 20,
-                    stretch: 0,
-                    depth: 100,
-                    modifier: 1,
-                    slideShadows: true,
-                },
-                pagination: { el: ".swiper-pagination", clickable: true },
-                loop: true
-            });
-        }
-
-        // First initial setup script runs on runtime load
+        // First initial setups
         generateFilterChips();
         renderCards();
     </script>
