@@ -3,52 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Semarang Space Hub - Premium Dashboard & Analytics</title>
+    <title>Semarang Space Hub - Smart Multimedia Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght=0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
-        /* DESIGN SYSTEM CONFIGURATION */
-        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s ease; scroll-behavior: smooth; }
+        /* CONFIGURATION SYSTEM */
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); scroll-behavior: smooth; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0b0705; color: #fff; overflow-x: hidden; }
         
-        /* WELCOME SCREEN */
+        /* PORTAL MASUK INTERAKTIF */
         .welcome-screen {
             width: 100vw; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
-            background: linear-gradient(rgba(10, 6, 4, 0.8), rgba(7, 4, 12, 0.95)), url('https://images.unsplash.com/photo-1498804103079-a6351b050096?q=80&w=1200') no-repeat center center/cover;
+            background: linear-gradient(rgba(11, 7, 5, 0.75), rgba(6, 3, 12, 0.95)), url('https://images.unsplash.com/photo-1498804103079-a6351b050096?q=80&w=1200') no-repeat center center/cover;
             padding: 40px 20px; position: relative;
         }
         .welcome-screen h1 { font-size: 3.5rem; font-family: 'Playfair Display', serif; margin-bottom: 15px; color: #fdfaf7; }
-        .welcome-screen h1 span { color: #e6a15c; text-shadow: 0 0 20px rgba(230,161,92,0.3); }
+        .welcome-screen h1 span { color: #e6a15c; text-shadow: 0 0 30px rgba(230,161,92,0.4); }
         .welcome-tagline { font-size: 1.1rem; max-width: 650px; opacity: 0.8; margin-bottom: 40px; line-height: 1.6; }
         .choice-container { display: flex; gap: 25px; max-width: 900px; width: 100%; justify-content: center; flex-wrap: wrap; }
-        .choice-card { flex: 1; min-width: 280px; background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); padding: 40px 30px; border-radius: 20px; cursor: pointer; }
-        .choice-card:hover { transform: translateY(-5px); background: rgba(255, 255, 255, 0.06); }
+        .choice-card { flex: 1; min-width: 280px; background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); padding: 40px 30px; border-radius: 24px; cursor: pointer; position: relative; overflow: hidden; }
+        .choice-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent); transform: translateX(-100%); transition: 0.6s; }
+        .choice-card:hover::before { transform: translateX(100%); }
+        .choice-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
         .choice-card i { font-size: 2.5rem; margin-bottom: 20px; }
         .work-choice i { color: #e6a15c; }
         .party-choice i { color: #ff2a74; }
 
         /* THEME CONTROL STYLES */
-        .main-content-section { display: none; padding-top: 100px; }
+        .main-content-section { display: none; padding-top: 100px; opacity: 0; transform: scale(0.98); }
+        .main-content-section.active { opacity: 1; transform: scale(1); }
         .main-navbar { position: fixed; top: 0; left: 0; width: 100%; height: 80px; display: flex; justify-content: space-between; align-items: center; padding: 0 40px; z-index: 1000; backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06); }
-        .nav-logo { font-weight: 800; font-size: 1.2rem; letter-spacing: 1px; }
+        .nav-logo { font-weight: 800; font-size: 1.2rem; letter-spacing: 1px; display: flex; align-items: center; gap: 10px; }
         .nav-controls { display: flex; gap: 15px; align-items: center; }
         .nav-link-btn { background: none; border: none; font-size: 0.9rem; font-weight: 600; cursor: pointer; padding: 10px 15px; border-radius: 10px; color: inherit; display: flex; align-items: center; gap: 6px; }
         .nav-link-btn:hover { background: rgba(255,255,255,0.05); }
-        .toggle-btn { border: none; padding: 10px 20px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 0.85rem; }
+        .toggle-btn { border: none; padding: 10px 20px; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 0.85rem; }
 
-        /* WORK MODE VARIABLE */
+        /* WORK MODE CONFIG */
         body.work-mode { background-color: #f7f5f0; color: #2a221b; }
         body.work-mode .main-navbar { background: rgba(247, 245, 240, 0.9); border-bottom-color: rgba(42,34,27,0.08); color: #2a221b; }
         body.work-mode .nav-logo { color: #846244; }
         body.work-mode .toggle-btn { background: #846244; color: #fff; }
-        body.work-mode .metric-card, body.work-mode .tool-box, body.work-mode .card, body.work-mode .compare-table { background: #ffffff; border: 1px solid rgba(0,0,0,0.06); color: #2a221b; }
+        body.work-mode .metric-card, body.work-mode .tool-box, body.work-mode .card, body.work-mode .compare-table { background: #ffffff; border: 1px solid rgba(42,34,27,0.08); color: #2a221b; }
         body.work-mode th { background: #f1eae1; color: #2a221b; }
         body.work-mode input, body.work-mode select { background: #fff; border: 1px solid #ccc; color: #222; }
 
-        /* PARTY MODE VARIABLE */
+        /* PARTY MODE CONFIG */
         body.party-mode { background-color: #06030c; color: #e5def2; }
         body.party-mode .main-navbar { background: rgba(6, 3, 12, 0.9); border-bottom-color: rgba(255,42,116,0.15); color: #e5def2; }
         body.party-mode .nav-logo { color: #ff2a74; }
@@ -57,135 +60,146 @@
         body.party-mode th { background: #1e133a; color: #fff; }
         body.party-mode input, body.party-mode select { background: #160e29; border: 1px solid #33215c; color: #fff; }
 
-        /* MASTER CORE SYSTEM LAYOUT */
+        /* MAIN SYSTEM LAYOUT */
         main { max-width: 1300px; margin: 0 auto; padding: 20px; display: flex; flex-direction: column; gap: 40px; }
         
-        /* 1. FEATURE: DASHBOARD METRICS */
+        /* FEATURE 1: DASHBOARD METRICS */
         .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
-        .metric-card { padding: 25px; border-radius: 16px; display: flex; align-items: center; gap: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.02); }
-        .metric-icon { width: 55px; height: 55px; border-radius: 12px; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; background: rgba(230,161,92,0.1); color: #e6a15c; }
+        .metric-card { padding: 25px; border-radius: 20px; display: flex; align-items: center; gap: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.02); }
+        .metric-icon { width: 55px; height: 55px; border-radius: 14px; display: flex; justify-content: center; align-items: center; font-size: 1.4rem; background: rgba(230,161,92,0.1); color: #e6a15c; }
         body.party-mode .metric-icon { background: rgba(255,42,116,0.1); color: #ff2a74; }
         .metric-info h4 { font-size: 0.85rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 0.5px; }
-        .metric-info p { font-size: 1.5rem; font-weight: 800; margin-top: 4px; }
+        .metric-info p { font-size: 1.4rem; font-weight: 800; margin-top: 4px; }
 
-        /* ADVANCED ANALYTICAL TOOLS INTERFACE */
-        .tools-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-        @media (max-width: 900px) { .tools-layout { grid-template-columns: 1fr; } }
-        .tool-box { padding: 30px; border-radius: 20px; display: flex; flex-direction: column; gap: 20px; }
-        .tool-box h3 { font-size: 1.3rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+        /* ADVANCED TOOLS INTERFACE */
+        .tools-layout { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 30px; }
+        @media (max-width: 950px) { .tools-layout { grid-template-columns: 1fr; } }
+        .tool-box { padding: 30px; border-radius: 24px; display: flex; flex-direction: column; gap: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.03); }
+        .tool-box h3 { font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
         
-        /* 2. FEATURE: COMPARISON SYSTEM */
+        /* FEATURE 2: AUTO MATRIC COMPARISON */
         .compare-selectors { display: flex; gap: 15px; }
-        .compare-selectors select { flex: 1; padding: 12px; border-radius: 10px; outline: none; font-weight: 600; }
-        .compare-table { width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; font-size: 0.9rem; }
-        .compare-table th, .compare-table td { padding: 14px; text-align: left; border-bottom: 1px solid rgba(0,0,0,0.05); }
-        body.party-mode .compare-table td { border-bottom-color: rgba(255,255,255,0.05); }
+        .compare-selectors select { flex: 1; padding: 12px; border-radius: 12px; outline: none; font-weight: 600; cursor: pointer; }
+        .compare-table { width: 100%; border-collapse: collapse; border-radius: 14px; overflow: hidden; font-size: 0.9rem; }
+        .compare-table th, .compare-table td { padding: 14px; text-align: left; border-bottom: 1px solid rgba(0,0,0,0.04); }
+        body.party-mode .compare-table td { border-bottom-color: rgba(255,255,255,0.04); }
 
-        /* 3. FEATURE: CREDIT / BUDGET PLANNER */
+        /* FEATURE 3: SMART BUDGET PLANNER (REPLACEMENT) */
         .form-group { display: flex; flex-direction: column; gap: 8px; }
         .form-group label { font-size: 0.85rem; font-weight: 600; opacity: 0.8; }
-        .form-group input, .form-group select { padding: 12px; border-radius: 10px; outline: none; font-weight: 600; }
-        .calculate-btn { width: 100%; padding: 14px; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; color: #fff; background: #e6a15c; }
+        .form-group input { padding: 12px; border-radius: 12px; outline: none; font-weight: 600; }
+        .calculate-btn { width: 100%; padding: 14px; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; color: #fff; background: #e6a15c; }
         body.party-mode .calculate-btn { background: #ff2a74; }
-        .credit-result-box { padding: 20px; border-radius: 12px; background: rgba(0,0,0,0.02); display: none; flex-direction: column; gap: 10px; }
-        body.party-mode .credit-result-box { background: rgba(255,255,255,0.02); }
+        .budget-result-box { padding: 20px; border-radius: 14px; background: rgba(0,0,0,0.02); display: none; flex-direction: column; gap: 12px; }
+        body.party-mode .budget-result-box { background: rgba(255,255,255,0.02); }
+        .recommendation-list { display: flex; flex-direction: column; gap: 8px; max-height: 150px; overflow-y: auto; font-size: 0.85rem; }
+        .recommendation-item { display: flex; justify-content: space-between; padding: 8px 12px; background: rgba(0,0,0,0.03); border-radius: 8px; }
+        body.party-mode .recommendation-item { background: rgba(255,255,255,0.04); }
 
-        /* 4. FEATURE: INTERACTIVE CATALOG FILTERING */
+        /* FEATURE 4: INTERACTIVE CATALOG FILTERING */
         .filter-bar { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 10px; }
         .search-wrapper { flex: 2; min-width: 280px; position: relative; }
-        .search-wrapper input { width: 100%; padding: 12px 15px 12px 40px; border-radius: 12px; outline: none; font-weight: 600; }
+        .search-wrapper input { width: 100%; padding: 12px 15px 12px 40px; border-radius: 14px; outline: none; font-weight: 600; }
         .search-wrapper i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); opacity: 0.5; }
-        .filter-select { flex: 1; min-width: 180px; padding: 12px; border-radius: 12px; outline: none; font-weight: 600; }
+        .filter-select { flex: 1; min-width: 170px; padding: 12px; border-radius: 14px; outline: none; font-weight: 600; cursor: pointer; }
 
-        /* GRID VIEW PORT */
+        /* GRID PORT & LIVE CARDS */
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .card { border-radius: 20px; overflow: hidden; cursor: pointer; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
-        .card-img-wrapper { width: 100%; height: 200px; overflow: hidden; }
+        .card { border-radius: 24px; overflow: hidden; cursor: pointer; border: 1px solid transparent; }
+        .card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.12); }
+        body.party-mode .card:hover { border-color: rgba(255,42,116,0.3); box-shadow: 0 20px 40px rgba(255,42,116,0.1); }
+        .card-img-wrapper { width: 100%; height: 210px; overflow: hidden; position: relative; }
         .card-img { width: 100%; height: 100%; object-fit: cover; }
-        .card:hover .card-img { transform: scale(1.05); }
-        .card-body { padding: 20px; display: flex; flex-direction: column; gap: 10px; }
-        .badge { align-self: flex-start; font-size: 0.7rem; padding: 4px 10px; border-radius: 8px; font-weight: 700; text-transform: uppercase; background: #f3eae1; color: #846244; }
+        .card:hover .card-img { transform: scale(1.08); }
+        .card-body { padding: 22px; display: flex; flex-direction: column; gap: 12px; }
+        .badge { align-self: flex-start; font-size: 0.7rem; padding: 4px 12px; border-radius: 8px; font-weight: 700; text-transform: uppercase; background: #f3eae1; color: #846244; }
         body.party-mode .badge { background: rgba(255,42,116,0.1); color: #ff2a74; }
 
-        /* MODALS STRUCTURAL CONFIGURATION */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(3, 2, 6, 0.8); z-index: 2000; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(8px); }
-        .modal-box { width: 100%; max-width: 600px; max-height: 90vh; border-radius: 24px; overflow-y: auto; position: relative; background: #fff; padding: 30px; color: #222; }
-        body.party-mode .modal-box { background: #0e091a; color: #e5def2; border: 1px solid #ff2a74; }
-        .modal-close { position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: inherit; }
+        /* MODALS BUILD */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(3, 2, 6, 0.85); z-index: 2000; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(10px); }
+        .modal-box { width: 100%; max-width: 600px; max-height: 85vh; border-radius: 28px; overflow-y: auto; position: relative; background: #fff; padding: 35px; color: #222; }
+        body.party-mode .modal-box { background: #0e091a; color: #e5def2; border: 1px solid rgba(255,42,116,0.3); }
+        .modal-close { position: absolute; top: 18px; right: 18px; background: none; border: none; font-size: 1.6rem; cursor: pointer; color: inherit; }
 
-        /* AUDIO SYSTEM BANNER */
-        .audio-player-widget { position: fixed; bottom: 25px; right: 25px; z-index: 5000; background: rgba(15, 11, 25, 0.85); backdrop-filter: blur(10px); padding: 10px 20px; border-radius: 30px; display: flex; align-items: center; gap: 12px; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
-        .play-btn { background: #e6a15c; border: none; width: 35px; height: 35px; border-radius: 50%; color: #fff; cursor: pointer; display: flex; justify-content: center; align-items: center; }
+        /* ADVANCED MULTIMEDIA WIDGET (LIVE ANIMATION) */
+        .audio-player-widget { position: fixed; bottom: 25px; right: 25px; z-index: 5000; background: rgba(15, 11, 25, 0.85); backdrop-filter: blur(15px); padding: 12px 24px; border-radius: 40px; display: flex; align-items: center; gap: 15px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
+        .play-btn { background: #e6a15c; border: none; width: 40px; height: 40px; border-radius: 50%; color: #fff; cursor: pointer; display: flex; justify-content: center; align-items: center; font-size: 1rem; }
         body.party-mode .play-btn { background: #ff2a74; }
-        footer { text-align: center; padding: 40px; font-size: 0.8rem; opacity: 0.5; margin-top: 20px; border-top: 1px solid rgba(0,0,0,0.05); }
+        
+        /* MULTIMEDIA LIVE WAVEFORM EQUALIZER GIMMICK */
+        .equalizer-wave { display: flex; align-items: flex-end; gap: 3px; width: 24px; height: 20px; }
+        .wave-bar { width: 3px; height: 100%; background-color: #e6a15c; border-radius: 3px; transform-origin: bottom; animation: bounce 0.8s ease-in-out infinite alternate; animation-play-state: paused; }
+        body.party-mode .wave-bar { background-color: #ff2a74; }
+        .equalizer-wave.playing .wave-bar { animation-play-state: running; }
+        .wave-bar:nth-child(2) { animation-delay: 0.2s; animation-duration: 0.5s; }
+        .wave-bar:nth-child(3) { animation-delay: 0.4s; animation-duration: 0.7s; }
+        .wave-bar:nth-child(4) { animation-delay: 0.1s; animation-duration: 0.6s; }
+
+        @keyframes bounce { 0% { transform: scaleY(0.2); } 100% { transform: scaleY(1); } }
+
+        footer { text-align: center; padding: 40px; font-size: 0.8rem; opacity: 0.5; margin-top: 30px; border-top: 1px solid rgba(0,0,0,0.04); }
     </style>
 </head>
 <body>
 
     <audio id="bgMusic" loop></audio>
 
-    <!-- IMMERSIVE ENTRY PORTAL -->
     <div class="welcome-screen" id="welcomeScreen">
         <h1>Semarang Space <span>Premium Hub</span></h1>
-        <p class="welcome-tagline">Sistem Informasi Bisnis & Analisis Spasial Terintegrasi Data Finansial, Simulasi Angsuran Dana Hiburan, Serta Matriks Perbandingan Komparatif Tempat Terbaik.</p>
+        <p class="welcome-tagline">Navigasi spasial & analisis cerdas terintegrasi sistem rekomendasi budget instan, komparasi multi-tempat, serta penunjang atmosfer audio real-time.</p>
         <div class="choice-container">
             <div class="choice-card work-choice" onclick="selectInitialMode('work')">
-                <i class="fa-solid fa-chart-line"></i>
-                <h3>WFC Analytics & Workspace</h3>
-                <p>Akses dasbor komparasi harga, kalkulator budget belajar, data spasial kedai produktif kota.</p>
+                <i class="fa-solid fa-laptop-code"></i>
+                <h3>WFC Analytics Hub</h3>
+                <p>Analisis kedai produktif, kalkulator kecocokan dana belajar mandiri, & audio ambient fokus.</p>
             </div>
             <div class="choice-card party-choice" onclick="selectInitialMode('party')">
-                <i class="fa-solid fa-network-wired"></i>
-                <h3>Nightlife Premium Dashboard</h3>
-                <p>Akses kalkulator cicilan dana hiburan weekend, katalog cerdas, matriks detail lounge kota.</p>
+                <i class="fa-solid fa-clapperboard"></i>
+                <h3>Nightlife Visual Dashboard</h3>
+                <p>Direktori rekreasi malam, kalkulator dana hangout weekend, & playlist musik panggung kota.</p>
             </div>
         </div>
     </div>
 
-    <!-- CORE INTERFACE -->
     <div class="main-content-section" id="mainContentSection">
         <nav class="main-navbar">
-            <div class="nav-logo"><i class="fa-solid fa-cube"></i> SMG BUSINESS ANALYTICS</div>
+            <div class="nav-logo"><i class="fa-solid fa-circle-nodes"></i> SMG SPACE INTELLIGENCE</div>
             <div class="nav-controls">
-                <button class="nav-link-btn" onclick="goToHome()"><i class="fa-solid fa-house"></i> Portal Utama</button>
-                <button class="nav-link-btn" onclick="openAbout()"><i class="fa-solid fa-id-card"></i> Developer</button>
+                <button class="nav-link-btn" onclick="goToHome()"><i class="fa-solid fa-rotate-left"></i> Ganti Mode</button>
+                <button class="nav-link-btn" onclick="openAbout()"><i class="fa-solid fa-user-gear"></i> Author</button>
                 <button class="toggle-btn" id="toggleMode" onclick="switchMode()"></button>
             </div>
         </nav>
 
         <main>
-            <!-- 1. FEATURE AREA: DASHBOARD METRIC SUITE -->
             <section class="dashboard-grid">
                 <div class="metric-card">
-                    <div class="metric-icon"><i class="fa-solid fa-store"></i></div>
+                    <div class="metric-icon"><i class="fa-solid fa-map-location-dot"></i></div>
                     <div class="metric-info">
-                        <h4>Total Objek Spasial</h4>
+                        <h4>Total Objek Terdata</h4>
                         <p id="metricTotal">0 Lokasi</p>
                     </div>
                 </div>
                 <div class="metric-card">
-                    <div class="metric-icon"><i class="fa-solid fa-tags"></i></div>
+                    <div class="metric-icon"><i class="fa-solid fa-wallet"></i></div>
                     <div class="metric-info">
-                        <h4>Rata-rata Harga Menu</h4>
+                        <h4>Standar Kelas Harga</h4>
                         <p id="metricPrice">Rp 0</p>
                     </div>
                 </div>
                 <div class="metric-card">
-                    <div class="metric-icon"><i class="fa-solid fa-bolt"></i></div>
+                    <div class="metric-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
                     <div class="metric-info">
-                        <h4>Fasilitas Utama</h4>
+                        <h4>Fasilitas Unggulan</h4>
                         <p id="metricFeature">High Wi-Fi</p>
                     </div>
                 </div>
             </section>
 
-            <!-- ANALYTICAL ENGINE WORKBENCH -->
             <section class="tools-layout">
-                <!-- 2. FEATURE AREA: COMPARISON SYSTEM -->
                 <div class="tool-box">
-                    <h3><i class="fa-solid fa-code-compare"></i> Matriks Perbandingan Harga & Spek</h3>
-                    <p style="font-size: 0.85rem; opacity: 0.7;">Pilih dua lokasi di bawah ini untuk mengaktifkan komparasi spek silang secara otomatis:</p>
+                    <h3><i class="fa-solid fa-shuffle"></i> Matriks Komparasi Spek Tempat</h3>
+                    <p style="font-size: 0.85rem; opacity: 0.7; margin-top: -10px;">Adu spesifikasi, fasilitas, & rentang biaya dua lokasi berbeda secara instan:</p>
                     <div class="compare-selectors">
                         <select id="compare1" onchange="runComparison()"></select>
                         <select id="compare2" onchange="runComparison()"></select>
@@ -193,64 +207,49 @@
                     <table class="compare-table">
                         <thead>
                             <tr>
-                                <th>Kriteria Analisis</th>
-                                <th id="compName1">Lokasi A</th>
-                                <th id="compName2">Lokasi B</th>
+                                <th>Kriteria Utama</th>
+                                <th id="compName1">Tempat A</th>
+                                <th id="compName2">Tempat B</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td>Wilayah Spasial</td><td id="compTag1">-</td><td id="compTag2">-</td></tr>
-                            <tr><td>Rentang Biaya</td><td id="compPrice1">-</td><td id="compPrice2">-</td></tr>
-                            <tr><td>Koneksi & Fitur</td><td id="compWifi1">-</td><td id="compWifi2">-</td></tr>
-                            <tr><td>Kontak Unit</td><td id="compPhone1">-</td><td id="compPhone2">-</td></tr>
+                            <tr><td>Wilayah/Tag</td><td id="compTag1">-</td><td id="compTag2">-</td></tr>
+                            <tr><td>Biaya Masuk/Menu</td><td id="compPrice1">-</td><td id="compPrice2">-</td></tr>
+                            <tr><td>Fasilitas Utama</td><td id="compWifi1">-</td><td id="compWifi2">-</td></tr>
+                            <tr><td>Nomor Kontak</td><td id="compPhone1">-</td><td id="compPhone2">-</td></tr>
                         </tbody>
                     </table>
                 </div>
 
-                <!-- 3. FEATURE AREA: INTERACTIVE CREDIT ENGINE -->
                 <div class="tool-box">
-                    <h3><i class="fa-solid fa-calculator"></i> Kalkulator Kredit & Budget Planner</h3>
-                    <p style="font-size: 0.85rem; opacity: 0.7;">Simulasikan rencana cicilan pendanaan kegiatan bulanan atau pinjaman dana operasional event mandiri.</p>
+                    <h3><i class="fa-solid fa-brain"></i> Smart Budget AI Planner</h3>
+                    <p style="font-size: 0.85rem; opacity: 0.7; margin-top: -10px;">Ketik isi dompetmu sekarang, biar sistem pintar menyaring lokasi yang sanggup kamu bayar.</p>
                     <div class="form-group">
-                        <label>Pilih Acuan Lokasi Target:</label>
-                        <select id="creditLocation"></select>
+                        <label>Masukkan Uang Kamu Saat Ini (Rp):</label>
+                        <input type="number" id="budgetInput" value="35000" placeholder="Contoh: 40000">
                     </div>
-                    <div class="form-group">
-                        <label>Estimasi Alokasi Dana Utama (Rupiah):</label>
-                        <input type="number" id="creditAmount" value="500000" placeholder="Contoh: 500000">
-                    </div>
-                    <div class="form-group">
-                        <label>Tenor Jangka Waktu Cicilan:</label>
-                        <select id="creditTenor">
-                            <option value="3">3 Bulan Angsuran</option>
-                            <option value="6">6 Bulan Angsuran</option>
-                            <option value="12">12 Bulan Angsuran</option>
-                        </select>
-                    </div>
-                    <button class="calculate-btn" onclick="calculateCreditEngine()">Jalankan Simulasi Finansial</button>
+                    <button class="calculate-btn" onclick="analyzeUserBudgetEngine()">Analisis Kecocokan Tempat</button>
                     
-                    <div class="credit-result-box" id="creditResult">
-                        <p><strong>Angsuran Pokok:</strong> <span id="resPokok"></span> / Bulan</p>
-                        <p><strong>Suku Bunga Layanan (1.5%):</strong> <span id="resBunga"></span> / Bulan</p>
+                    <div class="budget-result-box" id="budgetResult">
+                        <p style="font-size: 0.9rem; font-weight: 700;" id="budgetSummaryText"></p>
                         <hr style="opacity: 0.1; margin: 5px 0;">
-                        <p style="font-size: 1.1rem; color: #e6a15c;" class="total-angsuran-text"><strong>Total Angsuran Bulanan:</strong> <span id="resTotal" style="font-weight: 800;"></span></p>
+                        <div class="recommendation-list" id="budgetList"></div>
                     </div>
                 </div>
             </section>
 
-            <!-- 4. FEATURE AREA: INTERACTIVE CATALOG SYSTEM -->
-            <section style="display: flex; flex-direction: column; gap: 20px;">
-                <h3 style="font-size: 1.5rem; font-weight: 700;"><i class="fa-solid fa-layer-group"></i> Katalog Spasial Dinamis</h3>
+            <section style="display: flex; flex-direction: column; gap: 25px;">
+                <h3 style="font-size: 1.4rem; font-weight: 700;"><i class="fa-solid fa-cubes-blur"></i> Eksplorasi Katalog Spasial</h3>
                 <div class="filter-bar">
                     <div class="search-wrapper">
                         <i class="fa-solid fa-magnifying-glass"></i>
-                        <input type="text" id="searchInput" oninput="filterCatalog()" placeholder="Cari nama toko, jalan, atau wilayah spasial...">
+                        <input type="text" id="searchInput" oninput="filterCatalog()" placeholder="Cari nama, wilayah, atau jalan...">
                     </div>
                     <select class="filter-select" id="filterTag" onchange="filterCatalog()">
                         <option value="all">Semua Wilayah</option>
                     </select>
                     <select class="filter-select" id="sortPrice" onchange="filterCatalog()">
-                        <option value="default">Urutan Default</option>
+                        <option value="default">Urutkan Acak</option>
                         <option value="low">Harga: Murah ke Mahal</option>
                         <option value="high">Harga: Mahal ke Murah</option>
                     </select>
@@ -260,41 +259,44 @@
             </section>
         </main>
 
-        <!-- STREAM MEDIA LAYER -->
         <div class="audio-player-widget">
             <button class="play-btn" onclick="toggleMusic()"><i class="fa-solid fa-play" id="playIcon"></i></button>
-            <span style="font-size: 0.75rem; font-weight: 700; color: #fff;" id="trackName">AUDIO STATUS</span>
+            <span style="font-size: 0.75rem; font-weight: 700; color: #fff;" id="trackName">AUDIO OFF</span>
+            <div class="equalizer-wave" id="equalizerVisual">
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+            </div>
         </div>
 
         <footer>
-            <p>&copy; 2026 Amilia Amrina Rosyada | NIM: 143251005 | Premium Enterprise Dashboard</p>
+            <p>&copy; 2026 Amilia Amrina Rosyada | NIM: 143251005 | Premium Smart Dashboard</p>
         </footer>
     </div>
 
-    <!-- MAIN DETAIL DATA DIALOG -->
     <div class="modal-overlay" id="detailModal" onclick="closeOutside(event)">
         <div class="modal-box">
             <button class="modal-close" onclick="closeDetail()">&times;</button>
-            <h2 id="modalTitle" style="font-size: 1.6rem; font-weight: 800; margin-bottom: 15px;"></h2>
+            <h2 id="modalTitle" style="font-size: 1.5rem; font-weight: 800; margin-bottom: 15px;"></h2>
             <div style="display: flex; flex-direction: column; gap: 12px; font-size: 0.95rem; line-height: 1.6;">
-                <p><strong>Alamat Spasial:</strong> <span id="modalAddr"></span></p>
+                <p><strong>Alamat:</strong> <span id="modalAddr"></span></p>
                 <p><strong>Jam Kerja / Operasional:</strong></p>
-                <div style="background: rgba(0,0,0,0.04); padding: 12px; border-radius: 8px; font-size: 0.88rem;" id="modalTime"></div>
-                <p><strong>Kontak Seluler:</strong> <span id="modalPhone"></span></p>
-                <p><strong>Estimasi Biaya:</strong> <span id="modalPrice"></span></p>
-                <p><strong>Matriks Wi-Fi / Fasilitas:</strong> <span id="modalWifi"></span></p>
+                <div style="background: rgba(0,0,0,0.04); padding: 12px; border-radius: 10px; font-size: 0.88rem;" id="modalTime"></div>
+                <p><strong>Kontak:</strong> <span id="modalPhone"></span></p>
+                <p><strong>Estimasi Biaya Standar:</strong> <span id="modalPrice"></span></p>
+                <p><strong>Konektivitas & Fasilitas:</strong> <span id="modalWifi"></span></p>
             </div>
         </div>
     </div>
 
-    <!-- METADATA DIALOG -->
     <div class="modal-overlay" id="aboutModal" onclick="closeOutside(event)">
         <div class="modal-box" style="text-align: center; padding: 40px;">
             <button class="modal-close" onclick="closeAbout()">&times;</button>
-            <i class="fa-solid fa-id-badge" style="font-size: 4rem; color: #e6a15c; margin-bottom: 15px;"></i>
+            <i class="fa-solid fa-fingerprint" style="font-size: 4rem; color: #e6a15c; margin-bottom: 15px;"></i>
             <h2>Amilia Amrina Rosyada</h2>
             <p style="opacity: 0.7; margin-top: 5px;">NIM: 143251005 | Teknik Informatika</p>
-            <p style="margin-top: 20px; font-size: 0.9rem; font-style: italic; opacity: 0.8;">"Sistem Framework Integrasi Data Spasial Multimedia Kota Semarang - 2026."</p>
+            <p style="margin-top: 25px; font-size: 0.9rem; font-style: italic; opacity: 0.8;">"Sistem Framework Integrasi Data Spasial Multimedia Kota Semarang - 2026."</p>
         </div>
     </div>
 
@@ -309,7 +311,7 @@
                 { name: "Celcio Coffee", addr: "Jl. Sumbing No. IV, Gajahmungkur", time: "12.00 - 23.00 WIB", phone: "+62 823-1493-0070", price: 34500, priceText: "Rp 18.000 - Rp 51.000", wifi: "Kondusif & Tenang", tag: "Gajahmungkur", image: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?q=80&w=400" },
                 { name: "Anantari Coffee", addr: "Jl. Jangli Gabeng, Tembalang", time: "11.00 - 23.00 WIB", phone: "+62 821-3575-9015", price: 42500, priceText: "Rp 25.000 - Rp 60.000", wifi: "Outdoor Area Connected", tag: "Tembalang", image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=400" },
                 { name: "Kopitagram - Dr. Cipto", addr: "Jl. Dokter Cipto No. 111, Semarang Timur", time: "08.00 - 00.00 WIB", phone: "+62 877-8077-4318", price: 40000, priceText: "Rp 30.000 - Rp 50.000", wifi: "High-Speed Access Upload", tag: "Semarang Timur", image: "https://images.unsplash.com/photo-1521017432531-fbd92d768814?q=80&w=400" },
-                { name: "Domestik Coffee", addr: "Jl. Menteri Supeno No. 38, Semarang Selatan", time: "07.00 - 22.00 WIB", phone: "+62 851-7960-1868", price: 35000, priceText: "Rp 20.000 - Rp 50.000", wifi: "Koneksi Cepat Area Strategis", tag: "Taman KB", image: "https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=400" },
+                { name: "Domestik Coffee", addr: "Jl. Menteri Supeno No. 38, Semarang Selatan", time: "07.00 - 22.00 WIB", phone: "+62 851-7960-1868", price: 35000, priceText: "Rp 20.000 - Rp 50.000", wifi: "Koneksi Cepat Area Strategis", tag: "Taman KB", image: "https://images.unsplash.com/photo-1511920170033-f8396924c348?q=400" },
                 { name: "Dromma Coffee", addr: "Jl. Gajahmada No. 63, Semarang Tengah", time: "08.00 - 21.00 WIB", phone: "+62 812-1712-1319", price: 35000, priceText: "Rp 25.000 - Rp 45.000", wifi: "Dedicated Network Meeting", tag: "Gajahmada", image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=400" },
                 { name: "Djournal Coffee", addr: "The Park Mall, Semarang Barat", time: "10.00 - 21.00 WIB", phone: "Customer Service Mall", price: 47500, priceText: "Rp 35.000 - Rp 60.000", wifi: "Tenant Premium Network", tag: "Semarang Barat", image: "https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=400" },
                 { name: "Dirasa Kopi", addr: "Kawasan Kelurahan Gajahmungkur", time: "24 Jam", phone: "+62 812-2728-2527", price: 20000, priceText: "Rp 15.000 - Rp 25.000", wifi: "Free WiFi 24 Jam Penuh", tag: "Gajahmungkur", image: "https://images.unsplash.com/photo-1507133750040-4a8f57021571?q=80&w=400" }
@@ -332,7 +334,9 @@
         function selectInitialMode(m) {
             mode = m;
             document.getElementById("welcomeScreen").style.display = "none";
-            document.getElementById("mainContentSection").style.display = "block";
+            const mainSect = document.getElementById("mainContentSection");
+            mainSect.style.display = "block";
+            setTimeout(() => mainSect.classList.add("active"), 50);
             document.body.className = mode + "-mode";
             
             initDashboardTools();
@@ -345,15 +349,20 @@
         }
 
         function switchMode() {
-            mode = mode === "work" ? "party" : "work";
-            document.body.className = mode + "-mode";
-            initDashboardTools();
-            applyTheme();
-            renderCatalog();
-            audio.src = audioTracks[mode];
-            audio.load();
-            if (playing) { audio.play().catch(() => {}); }
-            updateAudioUI();
+            const mainSect = document.getElementById("mainContentSection");
+            mainSect.classList.remove("active");
+            setTimeout(() => {
+                mode = mode === "work" ? "party" : "work";
+                document.body.className = mode + "-mode";
+                initDashboardTools();
+                applyTheme();
+                renderCatalog();
+                audio.src = audioTracks[mode];
+                audio.load();
+                if (playing) { audio.play().catch(() => {}); }
+                updateAudioUI();
+                mainSect.classList.add("active");
+            }, 300);
         }
 
         function applyTheme() {
@@ -362,49 +371,36 @@
             document.getElementById("metricFeature").innerText = mode === "work" ? "High Wi-Fi" : "Premium Audio";
         }
 
-        // CORNERSTONE 1: DASHBOARD ANALYTICS INITIALIZER
         function initDashboardTools() {
             const data = contentData[mode];
-            
-            // Populate Metric Data
-            document.getElementById("metricTotal").innerText = `${data.length} Lokasi`;
+            document.getElementById("metricTotal").innerText = `${data.length} Tempat`;
             const avgPrice = Math.round(data.reduce((sum, item) => sum + item.price, 0) / data.length);
             document.getElementById("metricPrice").innerText = "± Rp " + avgPrice.toLocaleString('id-ID');
 
-            // Populate Dropdown Options for Comparison & Credit Tool
             const comp1 = document.getElementById("compare1");
             const comp2 = document.getElementById("compare2");
-            const creditLoc = document.getElementById("creditLocation");
-            
-            comp1.innerHTML = ""; comp2.innerHTML = ""; creditLoc.innerHTML = "";
+            comp1.innerHTML = ""; comp2.innerHTML = "";
             
             data.forEach((item, idx) => {
                 comp1.innerHTML += `<option value="${idx}">${item.name}</option>`;
                 comp2.innerHTML += `<option value="${idx}">${idx === 0 && data.length > 1 ? data[1].name : item.name}</option>`;
-                creditLoc.innerHTML += `<option value="${item.price}">${item.name}</option>`;
             });
-            
             if (data.length > 1) comp2.value = "1";
             
-            // Populate Tag Filters
             const filterTag = document.getElementById("filterTag");
             filterTag.innerHTML = `<option value="all">Semua Wilayah</option>`;
             const uniqueTags = [...new Set(data.map(item => item.tag))];
-            uniqueTags.forEach(tag => {
-                filterTag.innerHTML += `<option value="${tag}">${tag}</option>`;
-            });
+            uniqueTags.forEach(tag => { filterTag.innerHTML += `<option value="${tag}">${tag}</option>`; });
 
             runComparison();
-            document.getElementById("creditResult").style.display = "none";
+            document.getElementById("budgetResult").style.display = "none";
         }
 
-        // CORNERSTONE 2: SYSTEM COMPARISON MATRIC ENGINE
         function runComparison() {
             const idx1 = document.getElementById("compare1").value;
             const idx2 = document.getElementById("compare2").value;
             const item1 = contentData[mode][idx1];
             const item2 = contentData[mode][idx2];
-
             if(!item1 || !item2) return;
 
             document.getElementById("compName1").innerText = item1.name;
@@ -420,33 +416,40 @@
             document.getElementById("compPhone2").innerText = item2.phone;
         }
 
-        // CORNERSTONE 3: LOAN & CREDIT CALCULATOR (FINANCIAL ENGINE)
-        function calculateCreditEngine() {
-            const baseAmount = parseFloat(document.getElementById("creditAmount").value) || 0;
-            const tenor = parseInt(document.getElementById("creditTenor").value);
-            
-            if(baseAmount <= 0) { alert("Masukkan jumlah alokasi dana yang valid!"); return; }
+        // INTELLIGENT COMPONENT: SMART BUDGET ANALYZER
+        function analyzeUserBudgetEngine() {
+            const userMoney = parseFloat(document.getElementById("budgetInput").value) || 0;
+            const listContainer = document.getElementById("budgetList");
+            listContainer.innerHTML = "";
 
-            // Menggunakan rumus finansial standard bunga flat 1.5% per bulan
-            const pokok = Math.round(baseAmount / tenor);
-            const bunga = Math.round(baseAmount * 0.015);
-            const total = pokok + bunga;
+            if(userMoney <= 0) { alert("Masukkan jumlah isi uang saku yang valid!"); return; }
 
-            document.getElementById("resPokok").innerText = "Rp " + pokok.toLocaleString('id-ID');
-            document.getElementById("resBunga").innerText = "Rp " + bunga.toLocaleString('id-ID');
-            document.getElementById("resTotal").innerText = "Rp " + total.toLocaleString('id-ID');
+            const affordablePlaces = contentData[mode].filter(item => item.price <= userMoney);
             
-            document.getElementById("creditResult").style.display = "flex";
+            if(affordablePlaces.length === 0) {
+                document.getElementById("budgetSummaryText").innerText = "⚠️ Waduh, uang sakumu kurang untuk standar rata-rata di mode ini!";
+            } else {
+                document.getElementById("budgetSummaryText").innerText = `🎉 Ada ${affordablePlaces.length} opsi tempat aman untuk dompetmu:`;
+                affordablePlaces.forEach(place => {
+                    const change = userMoney - place.price;
+                    listContainer.innerHTML += `
+                        <div class="recommendation-item">
+                            <span><strong>${place.name}</strong></span>
+                            <span style="opacity: 0.8; color:#e6a15c;">Sisa Rp ${change.toLocaleString('id-ID')}</span>
+                        </div>
+                    `;
+                });
+            }
+            document.getElementById("budgetResult").style.display = "flex";
         }
 
-        // CORNERSTONE 4: CATALOG ARCHITECTURE & RENDERING
         function renderCatalog(filteredData) {
             const grid = document.getElementById("cardGrid");
             grid.innerHTML = "";
             const activeData = filteredData || contentData[mode];
 
             if(activeData.length === 0) {
-                grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px; opacity:0.5;">Matriks data katalog kosong / tidak ditemukan.</div>`;
+                grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px; opacity:0.5;">Matriks data lokasi tidak ditemukan.</div>`;
                 return;
             }
 
@@ -454,11 +457,11 @@
                 grid.innerHTML += `
                     <div class="card" onclick="openDetail('${item.name}')">
                         <div class="card-img-wrapper">
-                            <img src="${item.image}" class="card-img" alt="${item.name}" onerror="this.src='https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=400'">
+                            <img src="${item.image}" class="card-img" alt="${item.name}">
                         </div>
                         <div class="card-body">
-                            <h3 style="font-size:1.15rem; font-weight:700;">${item.name}</h3>
-                            <p style="font-size:0.85rem; opacity:0.7;"><i class="fa-solid fa-rupiah-sign"></i> ${item.priceText}</p>
+                            <h3 style="font-size:1.1rem; font-weight:700;">${item.name}</h3>
+                            <p style="font-size:0.85rem; opacity:0.75;"><i class="fa-solid fa-coins"></i> ACUAN: ${item.priceText}</p>
                             <span class="badge">${item.tag}</span>
                         </div>
                     </div>
@@ -470,30 +473,17 @@
             const searchVal = document.getElementById("searchInput").value.toLowerCase();
             const tagVal = document.getElementById("filterTag").value;
             const sortVal = document.getElementById("sortPrice").value;
-
             let records = [...contentData[mode]];
 
-            // Filter Text
-            if(searchVal) {
-                records = records.filter(r => r.name.toLowerCase().includes(searchVal) || r.addr.toLowerCase().includes(searchVal));
-            }
-
-            // Filter Dropdown Tag
-            if(tagVal !== "all") {
-                records = records.filter(r => r.tag === tagVal);
-            }
-
-            // Sort Engine
-            if(sortVal === "low") {
-                records.sort((a,b) => a.price - b.price);
-            } else if(sortVal === "high") {
-                records.sort((a,b) => b.price - a.price);
-            }
+            if(searchVal) records = records.filter(r => r.name.toLowerCase().includes(searchVal) || r.addr.toLowerCase().includes(searchVal));
+            if(tagVal !== "all") records = records.filter(r => r.tag === tagVal);
+            
+            if(sortVal === "low") records.sort((a,b) => a.price - b.price);
+            else if(sortVal === "high") records.sort((a,b) => b.price - a.price);
 
             renderCatalog(records);
         }
 
-        // MODAL ENGINE INTERACTION
         function openDetail(name) {
             const item = contentData[mode].find(x => x.name === name);
             if(!item) return;
@@ -512,7 +502,7 @@
         function closeOutside(e) { if(e.target.classList.contains('modal-overlay')) { closeDetail(); closeAbout(); } }
         function goToHome() { document.getElementById("mainContentSection").style.display = "none"; document.getElementById("welcomeScreen").style.display = "flex"; audio.pause(); playing = false; updateAudioUI(); }
 
-        // STREAM AUDIO SYSTEM
+        // LIVE MULTIMEDIA ENGINE CONTROLLER
         function toggleMusic() {
             playing = !playing;
             if(playing) {
@@ -525,7 +515,12 @@
 
         function updateAudioUI() {
             document.getElementById("playIcon").className = playing ? "fa-solid fa-pause" : "fa-solid fa-play";
-            document.getElementById("trackName").innerText = playing ? (mode === "work" ? "ON: CAFE AMBIENCE" : "ON: CLUB THEME") : "AUDIO PAUSED";
+            document.getElementById("trackName").innerText = playing ? (mode === "work" ? "AMBIENT CAFE ACTIVE" : "PARTY LOUNGE THEME") : "AUDIO PAUSED";
+            
+            // Mengontrol hidup/matinya animasi gelombang equalizer multimedia
+            const eq = document.getElementById("equalizerVisual");
+            if(playing) eq.classList.add("playing");
+            else eq.classList.remove("playing");
         }
     </script>
 </body>
