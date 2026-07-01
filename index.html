@@ -3,623 +3,373 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Semarang Interactive City Guide - Portal Dynamic Object</title>
+    <title>Semarang Interactive Dynamic Guide - Portfolio Amilia Amrina</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght=700&family=Playfair+Display:ital,wght=0,600;1,400&family=Plus+Jakarta+Sans:wght=400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Playfair+Display:ital,wght=0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; transition: background-color 0.4s, color 0.4s, border-color 0.4s; scroll-behavior: smooth; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; line-height: 1.6; overflow-x: hidden; background-color: #0b0713; color: #fff; }
         
-        /* ================= 1. WELCOME SCREEN LANDING ================= */
+        /* LANDING PAGE WELCOME SCREEN */
         .welcome-screen {
-            width: 100vw;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            background: linear-gradient(rgba(11, 7, 19, 0.7), rgba(11, 7, 19, 0.95)), url('https://images.unsplash.com/photo-1541343072874-3ee362864211?q=80&w=1600') no-repeat center center/cover;
-            padding: 60px 20px;
+            width: 100vw; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+            background: linear-gradient(rgba(11, 7, 19, 0.8), rgba(11, 7, 19, 0.98)), url('https://images.unsplash.com/photo-1541343072874-3ee362864211?q=80&w=1600') no-repeat center center/cover;
+            padding: 40px 20px;
         }
+        .welcome-screen h1 { font-size: 3.8rem; font-family: 'Playfair Display', serif; margin-bottom: 10px; font-weight: 700; }
+        .welcome-screen h1 span { font-family: 'Orbitron', sans-serif; color: #ff007f; text-shadow: 0 0 15px #ff007f; }
+        .welcome-tagline { font-size: 1.1rem; max-width: 600px; opacity: 0.8; margin-bottom: 20px; font-weight: 400; }
         
-        .welcome-screen h1 {
-            font-size: 4rem;
-            font-family: 'Playfair Display', serif;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.6);
-        }
-        .welcome-screen h1 span {
-            font-family: 'Orbitron', sans-serif;
-            color: #ff007f;
-            text-shadow: 0 0 15px #ff007f;
-        }
-        
-        .welcome-tagline {
-            font-size: 1.2rem;
-            max-width: 650px;
-            margin-bottom: 30px;
-            opacity: 0.9;
-            color: #d1c9df;
-        }
-
-        /* STATS BAR BIAR BERANDA RAMAI */
-        .welcome-stats {
-            display: flex;
-            gap: 40px;
-            margin-bottom: 45px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 15px 40px;
-            border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .stat-item { text-align: center; }
+        .welcome-stats { display: flex; gap: 30px; margin: 20px 0 40px 0; background: rgba(255, 255, 255, 0.05); padding: 15px 40px; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
         .stat-item h4 { font-size: 1.4rem; color: #ff007f; font-family: 'Orbitron', sans-serif; }
-        .stat-item p { font-size: 0.8rem; opacity: 0.7; letter-spacing: 0.5px; text-transform: uppercase; }
-        
-        /* METHOD CHOICE CARDS */
-        .choice-container {
-            display: flex;
-            gap: 30px;
-            max-width: 900px;
-            width: 100%;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .choice-card {
-            flex: 1;
-            min-width: 300px;
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            padding: 40px 30px;
-            border-radius: 24px;
-            cursor: pointer;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s, box-shadow 0.3s;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .choice-card::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, rgba(255,255,255,0.08) 0%, transparent 70%);
-            opacity: 0; transition: opacity 0.3s;
-        }
-        .choice-card:hover::before { opacity: 1; }
-        .choice-card:hover { transform: translateY(-12px); }
-        
-        .choice-card.work-choice:hover { border-color: #8c6239; box-shadow: 0 15px 35px rgba(140, 98, 57, 0.25); background: rgba(140, 98, 57, 0.03); }
-        .choice-card.party-choice:hover { border-color: #ff007f; box-shadow: 0 15px 35px rgba(255, 0, 127, 0.25); background: rgba(255, 0, 127, 0.03); }
-        
+        .stat-item p { font-size: 0.75rem; opacity: 0.7; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* CHOICE CARDS */
+        .choice-container { display: flex; gap: 25px; max-width: 950px; width: 100%; justify-content: center; flex-wrap: wrap; }
+        .choice-card { flex: 1; min-width: 290px; background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08); padding: 40px 30px; border-radius: 24px; cursor: pointer; text-align: center; position: relative; overflow: hidden; }
+        .choice-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.03), transparent); transform: translateX(-100%); transition: 0.6s; }
+        .choice-card:hover::before { transform: translateX(100%); }
+        .choice-card:hover { transform: translateY(-8px); background: rgba(255, 255, 255, 0.07); border-color: rgba(255,255,255,0.2); }
         .choice-card i { font-size: 3rem; margin-bottom: 20px; }
-        .work-choice i { color: #d4a373; }
-        .party-choice i { color: #ff007f; }
+        .work-choice i { color: #d4a373; text-shadow: 0 0 10px rgba(220,163,115,0.4); }
+        .party-choice i { color: #ff007f; text-shadow: 0 0 10px rgba(255,0,127,0.4); }
+
+        /* MAIN CONTENT SECTION */
+        .main-content-section { display: none; min-height: 100vh; padding-top: 80px; }
+        .main-navbar { position: fixed; top: 0; left: 0; width: 100%; height: 70px; display: flex; justify-content: space-between; align-items: center; padding: 0 40px; z-index: 1000; backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,255,255,0.1); }
         
-        .choice-card h3 { font-size: 1.6rem; margin-bottom: 12px; }
-        .work-choice h3 { font-family: 'Playfair Display', serif; }
-        .party-choice h3 { font-family: 'Orbitron', sans-serif; }
-        .choice-card p { font-size: 0.9rem; opacity: 0.7; line-height: 1.5; }
-
-        /* ================= 2. MAIN INTERACTIVE CONTENT ================= */
-        .main-content-section {
-            display: none;
-            min-height: 100vh;
-            padding-top: 90px;
-        }
-
-        /* NAVIGATION BAR UTAMA (KONTROL BARU) */
-        .main-navbar {
-            position: fixed; top: 0; left: 0; width: 100%; height: 75px;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 0 40px; z-index: 1000;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            background: rgba(11, 7, 19, 0.6); backdrop-filter: blur(15px);
-        }
-        .work-mode .main-navbar { background: rgba(252, 250, 246, 0.85); border-bottom: 1px solid rgba(140,98,57,0.15); }
-        .party-mode .main-navbar { background: rgba(9, 4, 20, 0.85); border-bottom: 1px solid rgba(255, 0, 127, 0.2); }
-
-        .nav-logo { font-weight: 700; font-size: 1.2rem; letter-spacing: 0.5px; }
-        .work-mode .nav-logo { color: #2c2520; font-family: 'Playfair Display', serif; }
-        .party-mode .nav-logo { color: #fff; font-family: 'Orbitron', sans-serif; text-shadow: 0 0 10px #ff007f; }
-
-        .nav-controls { display: flex; align-items: center; gap: 15px; }
-        .nav-link-btn { background: none; border: none; font-size: 0.9rem; font-weight: 600; cursor: pointer; padding: 8px 16px; border-radius: 20px; text-decoration: none; }
+        .nav-logo { font-weight: 900; font-size: 1.2rem; font-family: 'Orbitron', sans-serif; letter-spacing: 2px; }
+        .nav-controls { display: flex; gap: 15px; align-items: center; }
+        .nav-link-btn { background: none; border: none; font-size: 0.85rem; font-weight: 700; cursor: pointer; padding: 10px 18px; border-radius: 20px; display: flex; align-items: center; gap: 8px; text-transform: uppercase; }
         
+        .toggle-btn { border: none; padding: 10px 20px; border-radius: 25px; font-weight: 800; cursor: pointer; font-size: 0.8rem; text-transform: uppercase; font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
+
+        /* THEMES CONFIGURATION */
+        body.work-mode { background-color: #f7f4eb; color: #2c2520; }
+        .work-mode .main-navbar { background: rgba(247, 244, 235, 0.95); border-bottom: 1px solid rgba(44,37,32,0.1); }
+        .work-mode .nav-logo { color: #5a4d41; }
         .work-mode .nav-link-btn { color: #5a4d41; }
-        .work-mode .nav-link-btn:hover { background: rgba(140, 98, 57, 0.08); color: #8c6239; }
-        .party-mode .nav-link-btn { color: #c4b9db; }
-        .party-mode .nav-link-btn:hover { background: rgba(255, 0, 127, 0.1); color: #ff007f; }
-
-        .toggle-btn { border: none; padding: 10px 20px; border-radius: 25px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
-        
-        /* HEADER REKAYASA */
-        header { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 80px 20px; min-height: 40vh; position: relative; }
-        .hero-title { font-size: 3.5rem; color: #fff; }
-        .hero-tagline { font-size: 1.2rem; max-width: 600px; margin-top: 12px; color: #fff; text-shadow: 2px 2px 6px rgba(0,0,0,0.8); opacity: 0.95; }
-
-        /* ====== CONTROL UTAMA PERUBAHAN METODE/TEMA ====== */
-        body.work-mode { background-color: #fcfaf6; color: #2c2520; }
-        .work-mode header { background: linear-gradient(rgba(44, 37, 32, 0.5), rgba(44, 37, 32, 0.8)), url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200') no-repeat center center/cover; }
-        .work-mode .hero-title { font-family: 'Playfair Display', serif; }
-        .work-mode .section-title { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: #8c6239; text-align: center; margin-bottom: 10px; }
-        .work-mode .card { background: #fff; border: 1px solid rgba(140, 98, 57, 0.12); box-shadow: 0 8px 25px rgba(140, 98, 57, 0.04); }
-        .work-mode .card:hover { border-color: #8c6239; box-shadow: 0 15px 30px rgba(140, 98, 57, 0.14); }
-        .work-mode .badge { background: rgba(140, 98, 57, 0.12); color: #8c6239; }
+        .work-mode .nav-link-btn:hover { background: rgba(44,37,32,0.05); }
+        .work-mode header { background: linear-gradient(rgba(44, 37, 32, 0.65), rgba(44, 37, 32, 0.85)), url('https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200') no-repeat center center/cover; color: #fff; }
+        .work-mode .hero-title { font-family: 'Playfair Display', serif; font-weight: 700; }
+        .work-mode .card { background: #fff; border: 1px solid rgba(44,37,32,0.08); box-shadow: 0 4px 12px rgba(44,37,32,0.04); color: #2c2520; }
+        .work-mode .badge { background: #f3e5d8; color: #8c6239; }
 
         body.party-mode { background-color: #090414; color: #e1daf2; }
-        .party-mode header { background: linear-gradient(rgba(9, 4, 20, 0.4), rgba(9, 4, 20, 0.9)), url('https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1200') no-repeat center center/cover; }
-        .party-mode .hero-title { font-family: 'Orbitron', sans-serif; text-shadow: 0 0 15px #ff007f; }
-        .party-mode .section-title { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; color: #fff; text-shadow: 0 0 10px #ff007f; text-align: center; margin-bottom: 10px; }
-        .party-mode .card { background: #130c26; border: 1px solid rgba(188, 19, 254, 0.25); }
-        .party-mode .card:hover { border-color: #ff007f; box-shadow: 0 0 20px rgba(255, 0, 127, 0.45); }
-        .party-mode .badge { background: rgba(255, 0, 127, 0.25); color: #ff007f; }
+        .party-mode .main-navbar { background: rgba(9, 4, 20, 0.95); border-bottom: 1px solid rgba(255,0,127,0.2); }
+        .party-mode .nav-logo { color: #ff007f; text-shadow: 0 0 10px #ff007f; }
+        .party-mode .nav-link-btn { color: #e1daf2; }
+        .party-mode .nav-link-btn:hover { background: rgba(255,255,255,0.05); }
+        .party-mode header { background: linear-gradient(rgba(9, 4, 20, 0.5), rgba(9, 4, 20, 0.95)), url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1200') no-repeat center center/cover; color: #fff; }
+        .party-mode .hero-title { font-family: 'Orbitron', sans-serif; text-shadow: 0 0 15px #ff007f; color: #ff007f; }
+        .party-mode .card { background: #130c26; border: 1px solid #2a1b4d; box-shadow: 0 4px 20px rgba(0,0,0,0.4); color: #e1daf2; }
+        .party-mode .badge { background: rgba(255, 0, 127, 0.2); color: #ff007f; border: 1px solid rgba(255,0,127,0.3); }
 
-        /* SEARCH BAR INTERAKTIF BARU */
-        .search-container { max-width: 450px; margin: -30px auto 40px auto; padding: 0 20px; position: relative; z-index: 10; }
-        .search-input-wrapper { display: flex; align-items: center; background: #fff; border-radius: 30px; padding: 5px 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 2px solid transparent; }
-        .work-mode .search-input-wrapper { border-color: rgba(140, 98, 57, 0.2); }
-        .party-mode .search-input-wrapper { background: #1a1230; border-color: rgba(255, 0, 127, 0.3); }
-        .search-input-wrapper i { color: #888; margin-right: 12px; font-size: 1.1rem; }
-        .search-input-wrapper input { width: 100%; border: none; background: transparent; padding: 10px 0; outline: none; font-size: 0.95rem; font-weight: 500; }
-        .work-mode .search-input-wrapper input { color: #2c2520; }
-        .party-mode .search-input-wrapper input { color: #fff; }
-
-        /* GRID CONFIG */
+        /* SEARCH CONTAINER & TEXT INPUT */
+        header { padding: 80px 20px; text-align: center; }
+        .search-container { max-width: 500px; margin: -30px auto 40px auto; padding: 0 20px; }
+        .search-input-wrapper { background: #fff; border-radius: 30px; padding: 12px 25px; display: flex; align-items: center; box-shadow: 0 10px 25px rgba(0,0,0,0.15); border: 2px solid transparent; }
+        .work-mode .search-input-wrapper { border-color: #d4a373; }
+        .party-mode .search-input-wrapper { border-color: #ff007f; }
+        .search-input-wrapper i { color: #777; font-size: 1.1rem; }
+        .search-input-wrapper input { border: none; outline: none; width: 100%; padding-left: 15px; font-size: 1rem; font-weight: 600; color: #333; }
+        
+        /* GRID & CARDS */
         main { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-bottom: 60px; }
-        
-        /* CARD COMPONENT */
-        .card { border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.2), border-color 0.3s, box-shadow 0.3s; }
-        .card:hover { transform: translateY(-8px); }
-        .card-img-wrapper { width: 100%; height: 215px; overflow: hidden; }
-        .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
-        .card:hover .card-img { transform: scale(1.1); }
-        .card-body { padding: 25px; }
-        .card-body h3 { margin-bottom: 8px; font-size: 1.3rem; font-weight: 700; }
-        .card-body p { opacity: 0.75; font-size: 0.9rem; margin-bottom: 15px; height: 45px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .badge { display: inline-block; padding: 5px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .card { border-radius: 20px; overflow: hidden; cursor: pointer; transform: translateY(0); transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 12px 30px rgba(0,0,0,0.2); }
+        .card-img-wrapper { width: 100%; height: 220px; overflow: hidden; position: relative; }
+        .card-img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .card:hover .card-img { transform: scale(1.08); }
+        .card-body { padding: 25px; display: flex; flex-direction: column; gap: 12px; }
+        .card-body h3 { font-size: 1.25rem; font-weight: 700; }
+        .card-body p { font-size: 0.88rem; opacity: 0.75; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .badge { align-self: flex-start; font-size: 0.7rem; padding: 4px 12px; border-radius: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
 
-        /* MODAL POPUP */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 2000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; padding: 20px; }
-        .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-box { width: 100%; max-width: 700px; max-height: 85vh; border-radius: 24px; overflow-y: auto; transform: scale(0.9); transition: transform 0.3s ease; position: relative; }
-        .modal-overlay.active .modal-box { transform: scale(1); }
+        /* INTERACTIVE MODALS */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 3, 10, 0.85); z-index: 2000; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(8px); }
+        .modal-overlay.active { display: flex; }
+        .modal-box { width: 100%; max-width: 650px; max-height: 85vh; border-radius: 24px; overflow-y: auto; position: relative; background: #fff; color: #333; animation: zoomIn 0.3s ease; }
+        @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         
-        .work-mode .modal-box { background: #fcfaf6; color: #2c2520; border: 1px solid rgba(140,98,57,0.25); }
-        .party-mode .modal-box { background: #120b24; color: #e1daf2; border: 1px solid #ff007f; }
+        .party-mode .modal-box { background: #130c26; color: #e1daf2; border: 2px solid #ff007f; box-shadow: 0 0 30px rgba(255,0,127,0.2); }
+        .work-mode .modal-box { background: #fff; color: #2c2520; border: 2px solid #d4a373; }
+        .modal-img { width: 100%; height: 280px; object-fit: cover; }
+        .modal-body { padding: 30px; }
+        .modal-close { position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.6); color: #fff; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; display: flex; justify-content: center; align-items: center; z-index: 10; }
+        .modal-close:hover { background: #ff007f; }
         
-        .modal-img { width: 100%; height: 320px; object-fit: cover; }
-        .modal-body { padding: 35px; }
-        .modal-close { position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.6); color: #fff; border: none; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; z-index: 10; }
-        
-        .long-text-area { margin-top: 15px; font-size: 0.98rem; line-height: 1.7; text-align: justify; }
-        .long-text-area p { margin-bottom: 12px; }
-        
-        .modal-details { margin-top: 25px; display: flex; flex-direction: column; gap: 14px; font-size: 0.9rem; border-top: 1px solid rgba(128,128,128,0.2); padding-top: 20px; }
-        .modal-details div { display: flex; align-items: flex-start; gap: 14px; }
-        .modal-details i { width: 20px; text-align: center; margin-top: 3px; }
+        .info-section { margin-top: 20px; display: flex; flex-direction: column; gap: 12px; border-top: 1px solid rgba(0,0,0,0.08); padding-top: 20px; }
+        .party-mode .info-section { border-top-color: rgba(255,255,255,0.1); }
+        .info-row { display: flex; gap: 15px; align-items: center; font-size: 0.9rem; }
+        .info-row i { width: 20px; font-size: 1.1rem; text-align: center; }
+        .work-mode .info-row i { color: #8c6239; }
+        .party-mode .info-row i { color: #ff007f; }
 
-        footer { background: #05030a; color: #6e647d; text-align: center; padding: 35px 20px; font-size: 0.85rem; border-top: 1px solid rgba(255,255,255,0.05); }
+        /* FLOATING MUSIC WIDGET */
+        .audio-player-widget { position: fixed; bottom: 25px; right: 25px; z-index: 5000; background: rgba(11, 7, 19, 0.9); padding: 12px 22px; border-radius: 40px; display: flex; align-items: center; gap: 12px; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 8px 25px rgba(0,0,0,0.3); backdrop-filter: blur(5px); }
+        .play-btn { background: #ff007f; border: none; width: 35px; height: 35px; border-radius: 50%; color: #fff; cursor: pointer; display: flex; justify-content: center; align-items: center; font-size: 0.9rem; box-shadow: 0 0 10px #ff007f; }
+        .music-bars { display: flex; gap: 3px; align-items: flex-end; height: 14px; width: 20px; }
+        .music-bars span { width: 3px; height: 100%; background: #ff007f; animation: dance 1s infinite alternate; }
+        .paused span { animation-play-state: paused; height: 3px; }
+        @keyframes dance { from { height: 3px; } to { height: 14px; } }
+
+        footer { text-align: center; padding: 50px 20px; font-size: 0.85rem; opacity: 0.7; border-top: 1px solid rgba(255,255,255,0.08); margin-top: 60px; }
+        .work-mode footer { border-top-color: rgba(0,0,0,0.08); color: #5a4d41; }
     </style>
 </head>
 <body>
 
+    <audio id="bgMusic" loop></audio>
+
     <div class="welcome-screen" id="welcomeScreen">
         <h1>Semarang City <span>Guide</span></h1>
-        <p class="welcome-tagline">Portal pemetaan pariwisata urban interaktif. Cari ruang produktif ternyaman atau jelajahi gemerlap skena malam terbaik kota Semarang.</p>
+        <p class="welcome-tagline">Sistem Informasi Geografis & Direktori Hiburan Interaktif Kota Semarang. Silakan pilih mode eksplorasi Anda.</p>
         
         <div class="welcome-stats">
-            <div class="stat-item">
-                <h4 id="statCount">18 Spot</h4>
-                <p>Total Lokasi</p>
-            </div>
-            <div class="stat-item" style="border-left: 1px solid rgba(255,255,255,0.15); border-right: 1px solid rgba(255,255,255,0.15); padding: 0 30px;">
-                <h4>4.8 ★</h4>
-                <p>Avg Rating</p>
-            </div>
-            <div class="stat-item">
-                <h4>100+ Mbps</h4>
-                <p>Wi-Fi Speed</p>
-            </div>
+            <div class="stat-item"><h4>17 Spot</h4><p>Data Riil</p></div>
+            <div class="stat-item"><h4>Dual Mode</h4><p>Kategori</p></div>
+            <div class="stat-item"><h4>Dynamic</h4><p>Multimedia</p></div>
         </div>
         
         <div class="choice-container">
             <div class="choice-card work-choice" onclick="selectInitialMode('work')">
-                <i class="fa-solid fa-laptop-code"></i>
-                <h3>Work & Study Space</h3>
-                <p>Temukan 9 rekomendasi kafe ternyaman, hening, dan kondusif untuk nugas produktif atau WFC.</p>
+                <i class="fa-solid fa-mug-hot"></i>
+                <h3>Coffee Shop & WFC</h3>
+                <p>10 Rekomendasi workspace estetik dengan koneksi Wi-Fi stabil untuk menunjang produktivitas tugas kuliah.</p>
             </div>
-            
             <div class="choice-card party-choice" onclick="selectInitialMode('party')">
-                <i class="fa-solid fa-champagne-glasses"></i>
-                <h3>Semarang After Dark</h3>
-                <p>Eksplor 9 pusat hiburan malam, club hits, lounge mewah, dan spot melepas penat terbaik.</p>
+                <i class="fa-solid fa-glass-cheers"></i>
+                <h3>Nightlife & Party</h3>
+                <p>7 Pusat hiburan malam, live music club, dan bar paling hits untuk melepas penat di Kota Atlas.</p>
             </div>
         </div>
     </div>
 
-
     <div class="main-content-section" id="mainContentSection">
-        
         <nav class="main-navbar">
-            <div class="nav-logo" id="navLogo">SEMARANG GUIDE</div>
+            <div class="nav-logo" id="navLogo">SEMARANG DYNAMIC GUIDE</div>
             <div class="nav-controls">
                 <button class="nav-link-btn" onclick="goToHome()"><i class="fa-solid fa-house"></i> Beranda</button>
-                <button class="nav-link-btn" onclick="document.getElementById('locationHeading').scrollIntoView();"><i class="fa-solid fa-map-location-dot"></i> Daftar Lokasi</button>
-                <button class="nav-link-btn" onclick="alert('Semarang Interactive Guide v2.0\nDibuat oleh Amrina untuk Tugas Multimedia Berbasis Objek.')"><i class="fa-solid fa-circle-info"></i> Tentang Kami</button>
-                <div style="width: 1px; height: 25px; background: rgba(128,128,128,0.3); margin: 0 5px;"></div>
+                <button class="nav-link-btn" onclick="openAbout()"><i class="fa-solid fa-user"></i> Pengembang</button>
                 <button class="toggle-btn" id="toggleMode" onclick="switchMode()"></button>
             </div>
         </nav>
-        
-        <div class="modal-overlay" id="detailModal" onclick="closeModal(event)">
-            <div class="modal-box">
-                <button class="modal-close" onclick="document.getElementById('detailModal').classList.remove('active')"><i class="fa-solid fa-xmark"></i></button>
-                <img id="modalImg" src="" class="modal-img" alt="Cover">
-                <div class="modal-body">
-                    <h2 id="modalTitle" style="margin-bottom: 10px; font-size: 1.8rem;">Nama Lokasi</h2>
-                    <div class="long-text-area" id="modalLongDesc"></div>
-                    <div class="modal-details">
-                        <div><i class="fa-solid fa-map-location-dot" id="iconLoc"></i> <span id="modalLoc">Alamat</span></div>
-                        <div><i class="fa-solid fa-clock" id="iconTime"></i> <span id="modalHours">Jam Operasional</span></div>
-                        <div><i class="fa-solid fa-star" id="iconFeature"></i> <span id="modalHighlight">Fasilitas</span></div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <header>
             <h1 class="hero-title" id="heroTitle">Judul Dinamis</h1>
-            <p class="hero-tagline" id="heroTagline">Tagline dinamis objek.</p>
+            <p class="hero-tagline" id="heroTagline">Deskripsi Dinamis.</p>
         </header>
 
         <div class="search-container">
             <div class="search-input-wrapper">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="searchInput" oninput="filterCards()" placeholder="Cari nama tempat atau daerah lokasi...">
+                <input type="text" id="searchInput" oninput="filterCards()" placeholder="Ketik nama tempat untuk menyaring data...">
             </div>
         </div>
 
-        <main id="locationHeading">
-            <h2 class="section-title" id="sectionTitle">Pilihan Spot</h2>
-            <p id="searchZeroState" style="display:none; text-align:center; margin: 40px 0; font-weight:600; opacity:0.6;">Tempat yang kamu cari tidak ditemukan...</p>
+        <main>
             <div class="grid" id="cardGrid"></div>
         </main>
 
+        <div class="audio-player-widget">
+            <button class="play-btn" onclick="toggleMusic()"><i class="fa-solid fa-play" id="playIcon"></i></button>
+            <span style="font-size: 0.75rem; font-weight: 700; color: #fff;" id="trackName">Audio Player</span>
+            <div class="music-bars paused" id="bars"><span></span><span></span><span></span></div>
+        </div>
+
         <footer>
-            <p>&copy; 2026 <strong>Amrina / NIM</strong> - Tugas Mandiri Multimedia Dinamis Berbasis Data Objek.</p>
+            <p>&copy; 2026 Amilia Amrina Rosyada | NIM: 143251005 | Proyek Portofolio Web Teknik Informatika</p>
         </footer>
     </div>
 
+    <div class="modal-overlay" id="detailModal" onclick="closeModal(event)">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeDetail()">&times;</button>
+            <img id="modalImg" class="modal-img" alt="Detail Image">
+            <div class="modal-body">
+                <h2 id="modalTitle"></h2>
+                <p id="modalDesc" style="font-size: 0.95rem; margin: 12px 0; opacity: 0.85; line-height: 1.6; text-align: justify;"></p>
+                
+                <div class="info-section">
+                    <div class="info-row"><i class="fa-solid fa-map-marker-alt"></i> <span id="modalAddr"></span></div>
+                    <div class="info-row"><i class="fa-solid fa-clock"></i> <span id="modalTime"></span></div>
+                    <div class="info-row"><i class="fa-solid fa-phone"></i> <span id="modalPhone"></span></div>
+                    <div class="info-row"><i class="fa-solid fa-money-bill-wave"></i> <span id="modalPrice"></span></div>
+                    <div class="info-row"><i class="fa-solid fa-wifi"></i> <span id="modalWifi"></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="aboutModal" onclick="closeModal(event)">
+        <div class="modal-box" style="text-align: center; padding: 45px 30px;">
+            <button class="modal-close" onclick="closeAbout()">&times;</button>
+            <i class="fa-solid fa-user-tie" style="font-size: 5.5rem; color: #ff007f; text-shadow: 0 0 15px rgba(255,0,127,0.3);"></i>
+            <h2 style="margin-top: 20px; font-size: 1.8rem;">Amilia Amrina Rosyada</h2>
+            <p style="opacity: 0.8; font-weight: 600; margin-top: 5px;">NIM: 143251005 | Program Studi Teknik Informatika</p>
+            <hr style="margin: 25px 0; opacity: 0.15;">
+            <p style="font-size: 0.95rem; font-style: italic; max-width: 500px; margin: 0 auto; line-height: 1.6;">
+                "Aplikasi web interaktif ini dirancang sebagai pemenuhan tugas akhir portofolio pemrograman web multimedia, mengintegrasikan data spasial objek populer di Semarang dengan arsitektur UI dwi-tema (Work & Party Mode)."
+            </p>
+        </div>
+    </div>
 
     <script>
+        const audioTracks = {
+            work: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
+            party: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+        };
+
         const contentData = {
             work: [
-                {
-                    name: "Skoen Coffee",
-                    shortDesc: "Konsep minimalis-zen tersembunyi di Pleburan untuk konsentrasi mutlak.",
-                    fullDesc: `<p>Skoen Coffee merupakan sebuah mahakarya ruang komunal tersembunyi (hidden gem) yang terletak di tengah padatnya kawasan Pleburan, Semarang Selatan. Kedai kopi ini mengusung konsep arsitektur minimalis-zen yang berkiblat pada estetika modern Jepang, memadukan elemen kayu alami, dinding plaster abu-abu yang menenangkan, serta tata pencahayaan yang lembut untuk meminimalisir stres visual bagi pengunjungnya.</p>`,
-                    location: "Jl. Pleburan Barat No.7, Pleburan, Kec. Semarang Selatan",
-                    hours: "08:00 - 23:00 WIB",
-                    features: "Stopkontak melimpah di tiap sudut meja, AC central konstan dingin, ambient musik lo-fi hening, kursi nyaman.",
-                    image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=600",
-                    tag: "Kondusif & Tenang"
-                },
-                {
-                    name: "Kopi Sarikat",
-                    shortDesc: "Sensasi nugas di dalam cagar budaya kolonial bernuansa klasik Kota Lama.",
-                    fullDesc: `<p>Kopi Sarikat menawarkan sensasi pengalaman produktivitas yang unik dengan menempati salah satu aset bangunan cagar budaya kolonial Belanda yang dirawat megah di kawasan inti Kota Lama Semarang. Interior kafe ini mempertahankan struktur tembok bata ekspos tebal asli abad ke-19.</p>`,
-                    location: "Jl. Garuda No.7, Tj. Mas, Kawasan Kota Lama, Kec. Semarang Utara",
-                    hours: "09:00 - 00:00 WIB",
-                    features: "Pencahayaan alami berlimpah, meja komunal kayu jati berukuran lebar, koneksi Wi-Fi dedicated, area indoor ber-AC penuh.",
-                    image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=600",
-                    tag: "Arsitektur Klasik"
-                },
-                {
-                    name: "Tyler's Smokehouse",
-                    shortDesc: "Area super luas bertema industrial di Tembalang, pas untuk kerja kelompok.",
-                    fullDesc: `<p>Terletak di kawasan pendidikan Tembalang, Tyler's Smokehouse hadir sebagai jawaban atas kebutuhan ruang diskusi kelompok berskala besar yang sering dikeluhkan oleh para mahasiswa Semarang Atas. Tempat ini mengadopsi konsep desain industrial kontemporer dengan langit-langit yang sengaja diekspos tinggi.</p>`,
-                    location: "Jl. Banjarsari No.23, Tembalang, Kec. Tembalang",
-                    hours: "11:00 - 23:00 WIB",
-                    features: "Meja komunal panjang khusus grup besar, stopkontak terintegrasi di tengah meja, menu makanan berat melimpah.",
-                    image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=600",
-                    tag: "Meja Komunal"
-                },
-                {
-                    name: "Antara Kata Coffee",
-                    shortDesc: "Markas andalan pejuang deadline malam hari dengan jaminan akses 24 jam.",
-                    fullDesc: `<p>Antara Kata Coffee merupakan coffee shop modern yang sudah sangat legendaris di kalangan mahasiswa Semarang sebagai markas penyelamat di malam hari. Mengusung konsep modern-minimalist, kafe ini didedikasikan penuh untuk mengakomodasi ekosistem para pekerja lepas digital.</p>`,
-                    location: "Jl. Durian Raya No.65, Srondol Wetan, Kec. Banyumanik",
-                    hours: "24 Jam Nonstop",
-                    features: "Operasional penuh 24 jam, Wi-Fi bisnis kecepatan tinggi, colokan melimpah, pilihan kopi melimpah.",
-                    image: "https://images.unsplash.com/photo-1521017432531-fbd92d768814?q=80&w=600",
-                    tag: "Buka 24 Jam"
-                },
-                {
-                    name: "Spiegel Bistro",
-                    shortDesc: "Atmosfer pengerjaan premium yang dipadukan keanggunan sejarah kota lama.",
-                    fullDesc: `<p>Spiegel Bistro menawarkan kemewahan ruang kerja eksekutif yang dibalut oleh nilai keanggunan sejarah arsitektur masa lampau. Gedung ini merupakan salah satu cagar budaya tertua di Kota Lama Semarang yang dibangun pada tahun 1895.</p>`,
-                    location: "Jl. Letjen Suprapto No.34, Kota Lama, Kec. Semarang Utara",
-                    hours: "10:00 - 23:00 WIB",
-                    features: "Suasana premium eksklusif, AC pusat senyap, menu western bintang lima, pelayanan responsif.",
-                    image: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?q=80&w=600",
-                    tag: "Premium & Tenang"
-                },
-                {
-                    name: "Openaire Spaces",
-                    shortDesc: "Konsep eco-friendly semi-outdoor asri di Marina untuk segarkan pikiran.",
-                    fullDesc: `<p>Openaire Spaces menghadirkan inovasi radikal dalam dunia ruang produktif dengan menggabungkan konsep perkantoran modern dengan keasrian ekosistem botani terbuka hijau di wilayah Marina, Semarang Barat.</p>`,
-                    location: "Jl. Marina Raya No.88, Tawangsari, Kec. Semarang Barat",
-                    hours: "08:00 - 22:00 WIB",
-                    features: "Sirkulasi udara alami laut, area semi-outdoor sejuk, pet-friendly, variasi menu sehat artisan tea.",
-                    image: "https://images.unsplash.com/photo-1534433842601-52648fc92c2a?q=80&w=600",
-                    tag: "Eco Green Space"
-                },
-                {
-                    name: "Selasar Kasih",
-                    shortDesc: "Nugas santai ditemani panorama perbukitan hijau sejuk khas Semarang Atas.",
-                    fullDesc: `<p>Selasar Kasih adalah pilihan ruang kerja bernuansa alam terbaik yang bertengger di atas bukit wilayah Candisari, Semarang Atas. Kafe ini sengaja dibangun dengan rancangan berundak mengikuti kontur lereng bukit.</p>`,
-                    location: "Jl. Kasipah No.12, Jatingaleh, Kec. Candisari",
-                    hours: "10:00 - 22:00 WIB",
-                    features: "Pemandangan perbukitan luas, area outdoor berundak sejuk, harga sangat murah, parkir motor luas.",
-                    image: "https://images.unsplash.com/photo-1507133750040-4a8f57021571?q=80&w=600",
-                    tag: "View Alam Bukit"
-                },
-                {
-                    name: "Eastman Coffee House",
-                    shortDesc: "Fasilitas sofa premium di jantung kota, andalan para profesional remote worker.",
-                    fullDesc: `<p>Eastman Coffee House didesain secara khusus menyerupai kedai kopi urban klasik di kota New York yang mengutamakan kecepatan, efisiensi, dan kenyamanan fasilitas kelas eksekutif.</p>`,
-                    location: "Jl. Ahmad Yani No.140, Karangkidul, Kec. Semarang Tengah",
-                    hours: "07:00 - 22:00 WIB",
-                    features: "Sofa kulit premium, Wi-Fi korporat super cepat, menu breakfast pagi lengkap, lokasi strategis pusat kota.",
-                    image: "https://images.unsplash.com/photo-1463796113310-bf9653b19c2a?q=80&w=600",
-                    tag: "Fasilitas Eksekutif"
-                },
-                {
-                    name: "Noeri's Cafe",
-                    shortDesc: "Atmosfer konsentrasi klasik dikelilingi koleksi benda antik nan hening.",
-                    fullDesc: `<p>Noeri's Cafe mengusung konsep ruang kerja galeri seni purbakala yang menawarkan tingkat kedamaian batin dan keheningan konsentrasi yang luar biasa tinggi.</p>`,
-                    location: "Jl. Nuri No.6, Kawasan Kota Lama, Kec. Semarang Utara",
-                    hours: "10:00 - 21:00 WIB",
-                    features: "Interior galeri barang antik unik, suasana super sunyi tanpa bising, teh poci tradisional hangat, pelayanan ramah.",
-                    image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=600",
-                    tag: "Super Sunyi & Hening"
-                }
+                { name: "ARAH Coffee Heritage", addr: "Jl. Cendrawasih No. 40, Kota Lama", time: "24 Jam", phone: "+6281119161005", price: "Kopi & Minuman: Rp23.000 – Rp45.000", wifi: "Tersedia (Free High Speed Wi-Fi)", tag: "Heritage Space", desc: "Menawarkan atmosfer klasik khas bangunan kolonial Kota Lama yang berpadu dengan modernitas. Memiliki area komunal yang sangat tenang dan kondusif, menjadikannya pilihan utama bagi mahasiswa dan remote worker yang membutuhkan fokus tinggi sepanjang malam.", image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=500" },
+                { name: "Kayo Coffee and Eatery", addr: "Jl. Melati Selatan No.8A, Brumbungan", time: "09.00 - 00.00", phone: "+6282173692019", price: "Minuman: Rp16k - Rp30k | Makanan: Rp25k - Rp50k", wifi: "Tersedia (Koneksi Stabil & Banyak Colokan)", tag: "Minimalist WFC", desc: "Coffee shop berdesain minimalis industrial yang sangat ramah untuk kegiatan mengetik atau diskusi kelompok. Di setiap sudut meja disediakan soket listrik yang melimpah dengan kualitas internet mumpuni agar pengerjaan tugas kuliah berjalan lancar tanpa hambatan.", image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=500" },
+                { name: "Lupa Waktu Coffee", addr: "Jl. Banyu Putih Raya, Tembalang", time: "24 Jam", phone: "+6285117805576", price: "Kopi & Snack: Rp12.000 – Rp20.000", wifi: "Tersedia (Free Wi-Fi Ramah Kantong)", tag: "Student Center", desc: "Pusat berkumpulnya mahasiswa Tembalang yang ingin begadang menyelesaikan tugas akhir. Dengan harga menu yang sangat ekonomis dan terjangkau, kafe ini memberikan fasilitas akses internet gratis 24 jam penuh tanpa batasan waktu.", image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=500" },
+                { name: "Celcio Coffee", addr: "Jl. Sumbing No.IV, Gajahmungkur", time: "12.00 - 00.00", phone: "+6282314930070", price: "Minuman: Rp18k - Rp38k | Makanan: Rp28k - Rp51k", wifi: "Tersedia (Suasana Sejuk & Tenang)", tag: "Cozy Hideout", desc: "Terletak di kawasan perbukitan Gajahmungkur yang asri dan sejuk. Sangat cocok bagi Anda yang jenuh dengan hiruk-pikuk pusat kota dan mencari tempat bernuansa alam tenang untuk membaca buku, coding, atau menyusun laporan proyek.", image: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?q=80&w=500" },
+                { name: "Anantari Coffee", addr: "Jl. Jangli Gabeng, Tembalang", time: "10.00 - 00.00", phone: "+6282135759015", price: "Kisaran Menu: Rp25.000 - Rp60.000", wifi: "Tersedia (Wi-Fi Area Outdoor)", tag: "Hillside View", desc: "Menyajikan pemandangan lanskap perbukitan Semarang yang menawan dari ketinggian. Sembari menikmati udara segar dan keindahan visual kota, Anda tetap bisa produktif bekerja berkat jangkauan internet nirkabel yang mencakup area semi-outdoornya.", image: "https://images.unsplash.com/photo-1534433842601-52648fc92c2a?q=80&w=500" },
+                { name: "Kopitagram - Dr. Cipto", addr: "Jl. Dokter Cipto No.111", time: "08.00 - 02.00", phone: "+6287780774318", price: "Menu Premium: Rp30.000 - Rp50.000", wifi: "Tersedia (Super Fast Premium Wi-Fi)", tag: "Insta Workplace", desc: "Mengusung konsep arsitektur modern estetik yang sangat trendi di kalangan kreator konten digital. Kecepatan transfer data internet di sini sangat optimal, mendukung aktivitas berat seperti unggah video, streaming, hingga virtual meeting.", image: "https://images.unsplash.com/photo-1521017432531-fbd92d768814?q=80&w=500" },
+                { name: "Domestik Coffee", addr: "Jl. Menteri Supeno No.38", time: "06.00 - 23.00", phone: "+6285179601868", price: "Variasi Menu: Rp20.000 - Rp50.000", wifi: "Tersedia (Akses Pusat Kota)", tag: "Urban Hub", desc: "Berlokasi sangat strategis di area pusat aktivitas perkotaan Semarang. Tempat ini menjadi melting pot ideal bagi para profesional muda maupun akademisi yang ingin mengadakan pertemuan bisnis formal maupun kasual dengan dukungan Wi-Fi stabil.", image: "https://images.unsplash.com/photo-1463796113310-bf9653b19c2a?q=80&w=500" },
+                { name: "Dromma Coffee", addr: "Jl. Gajahmada, Kembangsari", time: "08.00 - 22.00", phone: "+6281217121319", price: "Kopi Spesialti: Rp25.000 - Rp45.000", wifi: "Tersedia (Artisan Quiet Vibe)", tag: "Executive Space", desc: "Menghadirkan kurasi biji kopi pilihan kualitas artisan premium dengan penataan interior bergaya korporat eksklusif. Suasananya diatur agar tidak terlalu bising, sangat direkomendasikan untuk menuntaskan pekerjaan yang butuh konsentrasi mendalam.", image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=500" },
+                { name: "Djournal Coffee", addr: "Jl. Merak No.29, Kota Lama", time: "07.00 - 20.00", phone: "N/A", price: "Coffee & Pastry: Rp35.000 - Rp60.000", wifi: "Tersedia (Mall Jaringan Nasional)", tag: "Premium Network", desc: "Bagian dari jaringan kedai kopi ternama nasional yang menjamin standar kenyamanan kelas wahid. Area duduknya yang ergonomis berpadu dengan sistem jaringan internet terenkripsi aman, sangat cocok untuk mengolah data sensitif kantor.", image: "https://images.unsplash.com/photo-1497551060073-4c5ab6435f12?q=80&w=500" },
+                { name: "Dirasa Kopi", addr: "RT 008 RW 006, Gajahmungkur", time: "24 Jam", phone: "+6281227282527", price: "Ekonomis: Rp15.000 - Rp25.000", wifi: "Tersedia (Fasilitas Begadang)", tag: "24/7 Budget Space", desc: "Solusi utama tempat belajar kelompok darurat di tengah malam tanpa menguras isi dompet. Menyediakan konektivitas Wi-Fi standar yang andal untuk sekadar browsing referensi jurnal, pengerjaan tugas kelompok, maupun unduh materi kuliah.", image: "https://images.unsplash.com/photo-1507133750040-4a8f57021571?q=80&w=500" }
             ],
             party: [
-                {
-                    name: "🚨 Golden Tiger Club",
-                    shortDesc: "Mega-club paling masif dengan tata lampu laser festival yang menggelegar.",
-                    fullDesc: `<p>Golden Tiger Club berdiri kokoh sebagai ikon pusat hiburan malam terbesar, paling masif, dan selalu dipadati oleh barisan party-goers di poros utama kota Semarang.</p>`,
-                    location: "Jl. Gajahmada No.168, Pekunden, Kec. Semarang Tengah",
-                    hours: "21:00 - 03:00 WIB",
-                    features: "Tata sistem lampu laser konser dunia, panggung layar LED multimedia interaktif raksasa, barisan sofa VIP eksklusif.",
-                    image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=600",
-                    tag: "Big Club & EDM"
-                },
-                {
-                    name: "💎 Onyx Lounge",
-                    shortDesc: "Lounge eksklusif menyajikan kemewahan malam bergaya urban futuristik.",
-                    fullDesc: `<p>Onyx Lounge memposisikan dirinya sebagai ruang hiburan malam kelas premium eksklusif yang menyasar kalangan eksekutif muda, pengusaha, serta komunitas urban papan atas.</p>`,
-                    location: "Kawasan Gajahmuda, Gajahmungkur, Kec. Semarang Atas",
-                    hours: "19:00 - 02:00 WIB",
-                    features: "Cocktail premium kustom, bar privat bergaya mewah, barisan sofa VIP eksklusif, area parkir valet gratis.",
-                    image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600",
-                    tag: "Premium Lounge"
-                },
-                {
-                    name: "🔥 Livehouse Semarang",
-                    shortDesc: "Tempat sing-along paling ramai dengan live band interaktif super meriah.",
-                    fullDesc: `<p>Livehouse Semarang menjelma menjadi markas andalan nomor satu bagi kawula muda Semarang yang rindu akan atmosfer pertunjukan panggung musik langsung.</p>`,
-                    location: "Jl. Menteri Supeno No.24, Mugassari, Kec. Semarang Selatan",
-                    hours: "19:00 - 02:00 WIB",
-                    features: "Panggung live band interaktif harian, sistem request lagu real-time berbasis QR, menu es beer tower murah.",
-                    image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=600",
-                    tag: "Live Band Hits"
-                },
-                {
-                    name: "🐇 Red Hare Bar",
-                    shortDesc: "Bar bergaya oriental modern eksotis dengan atmosfer musik elektronik santai.",
-                    fullDesc: `<p>Red Hare Bar membawa hembusan konsep bar bertema oriental modern kontemporer yang sangat eksotik di dalam perimeter kawasan bersejarah Kota Lama Semarang.</p>`,
-                    location: "Kawasan Kota Lama, Kintelan, Kec. Semarang Kidul",
-                    hours: "18:00 - 01:00 WIB",
-                    features: "Minuman racikan signature oriental, desain interior lampion merah, pertunjukan musik DJ downtempo.",
-                    image: "https://images.unsplash.com/photo-1511105612665-45120cd4ee31?q=80&w=600",
-                    tag: "Oriental Bar"
-                },
-                {
-                    name: "🦉 Helen's Night Mart",
-                    shortDesc: "Beer house kasual berkonsep mart kekinian, pas untuk nongkrong santai.",
-                    fullDesc: `<p>Helen's Night Mart mendisrupsi konsep hiburan malam kaku dengan memperkenalkan terobosan beer house berkonsep minimarket malam swalayan modern.</p>`,
-                    location: "Jl. Sultan Agung No.96, Gajahmungkur, Kec. Gajahmungkur",
-                    hours: "17:00 - 02:00 WIB",
-                    features: "Varian bir lengkap swalayan, panggung akustik live interaktif, area outdoor luas, harga camilan bersahabat.",
-                    image: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=600",
-                    tag: "Casual Beer House"
-                },
-                {
-                    name: "🍹 Soci Canteen",
-                    shortDesc: "Spot pemanasan malam andalan anak muda Tembalang sebelum lanjut party.",
-                    fullDesc: `<p>Soci Canteen merupakan episentrum utama tempat berkumpulnya lingkaran anak muda skena mahasiswa Semarang Atas sebagai lokasi pemanasan malam.</p>`,
-                    location: "Jl. Ngesrep Timur V No.42, Sumurboto, Kec. Banyumanik",
-                    hours: "16:00 - 00:00 WIB",
-                    features: "Harga menu bersahabat kantong mahasiswa, area outdoor semi-terbuka luas, playlist musik R&B/Hip-Hop.",
-                    image: "https://images.unsplash.com/photo-1497551060073-4c5ab6435f12?q=80&w=600",
-                    tag: "Warm-Up Spot"
-                },
-                {
-                    name: "🥂 Verve Bistro & Bar",
-                    shortDesc: "Resto-bar premium elegan di pusat kota dengan atmosfer lounge hotel bintang 5.",
-                    fullDesc: `<p>Verve Bistro & Bar menyajikan petualangan hiburan malam kelas atas yang melekat eksklusif di area lobi utama Rooms Inc Hotel.</p>`,
-                    location: "Rooms Inc Hotel, Jl. Pemuda No.150, Sekayu, Kec. Semarang Tengah",
-                    hours: "11:00 - 01:00 WIB",
-                    features: "Koleksi Wine & Spirits impor terlengkap, desain interior mewah kelas hotel, panggung musik live jazz.",
-                    image: "https://images.unsplash.com/photo-1543007630-9710e4a00a20?q=80&w=600",
-                    tag: "Luxury Bar & Resto"
-                },
-                {
-                    name: "🎙️ Babyface Club & Karaoke",
-                    shortDesc: "Kelab malam legendaris Semarang Barat dengan dentuman sound system bas juara.",
-                    fullDesc: `<p>Babyface Club & Karaoke berdiri tegak sebagai legenda hidup dunia gemerlap malam Kota Semarang yang telah mempertahankan reputasi besarnya.</p>`,
-                    location: "Kawasan Puri Anjasmoro Blok E1 No.8, Tawangsari, Kec. Semarang Barat",
-                    hours: "20:00 - 03:00 WIB",
-                    features: "Sistem audio bas legendaris, kamar karaoke VIP privat digital, pertunjukan panggung live dancer.",
-                    image: "https://images.unsplash.com/photo-1545128485-c400e7702796?q=80&w=600",
-                    tag: "Legendary Club"
-                },
-                {
-                    name: "✨ Aura Lounge & Bar",
-                    shortDesc: "Tempat rilis penat glamor dengan visual layar LED megah dan DJ atraktif.",
-                    fullDesc: `<p>Aura Lounge & Bar merupakan destinasi hiburan malam modern berkonsep glamor futuristik yang didirikan khusus di kawasan Semarang Barat.</p>`,
-                    location: "Jl. Madukoro Raya No.10, Tawangmas, Kec. Semarang Barat",
-                    hours: "21:00 - 03:00 WIB",
-                    features: "Dinding layar display visual LED raksasa panggung, cocktail kreasi mixologist handal, paket botol menarik.",
-                    image: "https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=600",
-                    tag: "Modern Glamour"
-                }
+                { name: "Soci Club", addr: "Jl. Anjasmoro Raya E1 No.8", time: "21.00 - 04.00", phone: "+6282281113336", price: "HTM / Paket: Start from Rp100.000", wifi: "Tersedia WiFi Area", tag: "Mega Club & Lounge", desc: "Salah satu klub malam termegah di Semarang dengan tata lampu berskala konser dunia dan sistem audio menggelegar. Menghadirkan jajaran DJ nasional dan internasional terkemuka untuk mengiringi malam lantai dansa Anda secara maksimal.", image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=500" },
+                { name: "Pots Bar", addr: "Jl. Tri Lomba Juang No.5", time: "18.00 - 03.00", phone: "+628112671413", price: "Cocktails Menu: Rp90.000+", wifi: "Tersedia WiFi Area", tag: "Intimate Bar", desc: "Mengusung konsep bar tersembunyi yang menawarkan keintiman tinggi untuk bersosialisasi. Diracik khusus oleh mixologist berpengalaman, aneka minuman koktail klasiknya siap menemani perbincangan santai Anda bersama kolega dekat.", image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=500" },
+                { name: "HW Tiger Club", addr: "Jl. Cendrawasih No.24", time: "20.00 - 01.00", phone: "+628111624898", price: "Premium Table Pricing", wifi: "Tersedia Akses Internet", tag: "Elite Clubbing", desc: "Destinasi pesta eksklusif kelas premium di jantung Kota Lama. Menyajikan kemewahan interior berkelas tinggi, pelayanan VVIP, dan suasana malam penuh kemeriahan yang dikurasi khusus untuk kalangan sosialita dan pecinta hiburan malam.", image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=500" },
+                { name: "HW Live House", addr: "Jl. Cendrawasih No.24", time: "21.00 - 04.00", phone: "+628111624898", price: "Paket Promo Beer Tower", wifi: "Tersedia Akses Internet", tag: "Live Music Stage", desc: "Fokus pada sajian panggung musik interaktif secara langsung dari band-band top lokal maupun ibu kota. Suasana sangat cair dan interaktif, mengajak seluruh pengunjung bernyanyi bersama (sing-along) lagu-lagu hits favorit.", image: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=500" },
+                { name: "Red Hare Bar", addr: "Jl. Imam Bonjol No.148", time: "17.00 - 03.30", phone: "+628112888670", price: "Menu Minuman: Rp80.000+", wifi: "Tersedia WiFi Area", tag: "Oriental Vibes Bar", desc: "Bar tematik unik dengan sentuhan ornamen oriental modern yang estetik dan dramatis. Tempat yang sangat trendi untuk berfoto sembari menikmati musik hip-hop, R&B, serta pilihan minuman premium yang bervariasi.", image: "https://images.unsplash.com/photo-1511105612665-45120cd4ee31?q=80&w=500" },
+                { name: "Helen’s Night Mart", addr: "Jl. Diponegoro No.22A", time: "20.00 - 04.00", phone: "+628111624898", price: "Beer & Drinks: Rp40.000+", wifi: "Tersedia Akses Internet", tag: "Casual Night Mart", desc: "Konsep hiburan malam kasual yang menyerupai minimarket modern bergaya retro. Pengunjung bisa bebas memilih sendiri aneka minuman bir kemasan dingin dari lemari display dengan harga kompetitif dan atmosfer santai tanpa aturan formal yang kaku.", image: "https://images.unsplash.com/photo-1543007630-9710e4a00a20?q=80&w=500" },
+                { name: "ONYX.ENT", addr: "Jl. Permata Hijau BB No. 25", time: "19.00 - 03.00", phone: "+6281128891212", price: "Fasilitas Room Karaoke & Bar", wifi: "Tersedia WiFi Area", tag: "Karaoke Vibe Entertainment", desc: "Pusat hiburan multimedia terpadu yang memadukan fasilitas lounge bar eksklusif dengan ruang bernyanyi (karaoke) berteknologi mutakhir. Pilihan tepat untuk merayakan momen selebrasi kelompok maupun pesta privat bersama rekan sejawat.", image: "https://images.unsplash.com/photo-1545128485-c400e7702796?q=80&w=500" }
             ]
         };
 
-        let activeMode = "work";
+        let mode = "work";
+        let playing = false;
+        const audio = document.getElementById("bgMusic");
 
-        function selectInitialMode(mode) {
-            activeMode = mode;
+        function selectInitialMode(m) {
+            mode = m;
             document.getElementById("welcomeScreen").style.display = "none";
             document.getElementById("mainContentSection").style.display = "block";
-            
             document.body.className = mode + "-mode";
-            document.getElementById("searchInput").value = ""; // Reset kolom pencarian
-            
-            applyThemeContent();
-            renderCards();
-            window.scrollTo(0,0);
-        }
-
-        function goToHome() {
-            document.getElementById("mainContentSection").style.display = "none";
-            document.getElementById("welcomeScreen").style.display = "flex";
-            document.body.className = "";
-        }
-
-        function renderCards(filterText = "") {
-            const grid = document.getElementById("cardGrid");
-            const zeroState = document.getElementById("searchZeroState");
-            grid.innerHTML = "";
-            
-            const items = contentData[activeMode];
-            // Saring objek berdasarkan kecocokan nama atau alamat lokasi
-            const filteredItems = items.filter(item => 
-                item.name.toLowerCase().includes(filterText.toLowerCase()) || 
-                item.location.toLowerCase().includes(filterText.toLowerCase())
-            );
-
-            if(filteredItems.length === 0) {
-                zeroState.style.display = "block";
-            } else {
-                zeroState.style.display = "none";
-                filteredItems.forEach((item) => {
-                    // Cari index asli dari data object global
-                    const originalIndex = items.findIndex(orig => orig.name === item.name);
-                    const cardHTML = `
-                        <div class="card" onclick="openDetail(${originalIndex})">
-                            <div class="card-img-wrapper">
-                                <img src="${item.image}" class="card-img" alt="${item.name}">
-                            </div>
-                            <div class="card-body">
-                                <h3>${item.name}</h3>
-                                <p>${item.shortDesc}</p>
-                                <span class="badge">${item.tag}</span>
-                            </div>
-                        </div>
-                    `;
-                    grid.innerHTML += cardHTML;
-                });
-            }
-        }
-
-        // FUNGSI CARI CEPAT (LIVE SEARCH ACTION)
-        function filterCards() {
-            const text = document.getElementById("searchInput").value;
-            renderCards(text);
-        }
-
-        function openDetail(index) {
-            const item = contentData[activeMode][index];
-            
-            document.getElementById("modalTitle").innerText = item.name;
-            document.getElementById("modalLongDesc").innerHTML = item.fullDesc;
-            document.getElementById("modalLoc").innerText = item.location;
-            document.getElementById("modalHours").innerText = item.hours;
-            document.getElementById("modalHighlight").innerText = item.features;
-            document.getElementById("modalImg").src = item.image;
-            
-            const locIcon = document.getElementById("iconLoc");
-            const timeIcon = document.getElementById("iconTime");
-            const featIcon = document.getElementById("iconFeature");
-            
-            if(activeMode === "work") {
-                locIcon.style.color = "#8c6239"; timeIcon.style.color = "#8c6239"; featIcon.style.color = "#8c6239";
-            } else {
-                locIcon.style.color = "#ff007f"; timeIcon.style.color = "#4cd137"; featIcon.style.color = "#fbc531";
-            }
-            
-            document.getElementById("detailModal").classList.add("active");
-        }
-
-        function closeModal(e) {
-            if(e.target.id === "detailModal") {
-                document.getElementById("detailModal").classList.remove("active");
-            }
-        }
-
-        function applyThemeContent() {
-            const btn = document.getElementById("toggleMode");
-            const title = document.getElementById("heroTitle");
-            const tagline = document.getElementById("heroTagline");
-            const sectTitle = document.getElementById("sectionTitle");
-            const logo = document.getElementById("navLogo");
-
-            if (activeMode === "party") {
-                btn.innerHTML = '<i class="fa-solid fa-mug-saucer"></i> Ganti ke Mode Kerja';
-                btn.style.backgroundColor = "#ff007f";
-                btn.style.color = "#fff";
-                
-                logo.innerText = "SEMARANG AFTER DARK";
-                title.innerText = "Semarang After Dark";
-                tagline.innerText = "Panduan skena malam, tempat party, dan tempat rilis penat paling hits di Kota Atlas.";
-                sectTitle.innerText = "9 Spot Skena Malam Terbaik";
-            } else {
-                btn.innerHTML = '<i class="fa-solid fa-moon"></i> Ganti ke Mode Party';
-                btn.style.backgroundColor = "#2c2520";
-                btn.style.color = "#fff";
-                
-                logo.innerText = "SEMARANG WFC GUIDE";
-                title.innerText = "Semarang WFC Guide";
-                tagline.innerText = "Rekomendasi sudut terbaik kota untuk fokus bekerja dan nugas produktif.";
-                sectTitle.innerText = "9 Pilihan Ruang Produktif";
-            }
+            applyTheme();
+            render();
+            audio.src = audioTracks[mode];
         }
 
         function switchMode() {
-            const body = document.body;
-            if (activeMode === "work") {
-                body.classList.remove("work-mode");
-                body.classList.add("party-mode");
-                activeMode = "party";
-            } else {
-                body.classList.remove("party-mode");
-                body.classList.add("work-mode");
-                activeMode = "work";
+            mode = mode === "work" ? "party" : "work";
+            document.body.className = mode + "-mode";
+            applyTheme();
+            render();
+            audio.src = audioTracks[mode];
+            if (playing) {
+                audio.play().catch(e => console.log("Audio play digagalkan browser"));
             }
-            document.getElementById("searchInput").value = ""; 
-            applyThemeContent();
-            renderCards();
+            updateUI();
+        }
+
+        function applyTheme() {
+            const btn = document.getElementById("toggleMode");
+            if (mode === "work") {
+                btn.innerHTML = "<i class='fa-solid fa-bolt'></i> Mode Party";
+                btn.style.background = "#2c2520"; btn.style.color = "#fff";
+                document.getElementById("heroTitle").innerText = "Semarang WFC Directory";
+                document.getElementById("heroTagline").innerText = "Koleksi ruang kerja komunal & kafe penunjang produktivitas dengan fasilitas Wi-Fi riil Kota Semarang.";
+            } else {
+                btn.innerHTML = "<i class='fa-solid fa-mug-hot'></i> Mode Kerja";
+                btn.style.background = "#ff007f"; btn.style.color = "#fff";
+                document.getElementById("heroTitle").innerText = "Semarang Nightlife Hub";
+                document.getElementById("heroTagline").innerText = "Panduan interaktif pusat hiburan malam, klub, live musik, dan bar terpopuler di Kota Atlas.";
+            }
+        }
+
+        function render(search = "") {
+            const grid = document.getElementById("cardGrid");
+            grid.innerHTML = "";
+            const filtered = contentData[mode].filter(i => i.name.toLowerCase().includes(search.toLowerCase()));
+            
+            if(filtered.length === 0) {
+                grid.innerHTML = `<div style='grid-column: 1/-1; text-align: center; padding: 40px; opacity: 0.6; font-weight: 700;'>Data tidak ditemukan. Coba kata kunci lain.</div>`;
+                return;
+            }
+
+            filtered.forEach((item) => {
+                // Cari index asli dari data untuk pencocokan modal
+                const originalIndex = contentData[mode].findIndex(x => x.name === item.name);
+                grid.innerHTML += `
+                    <div class="card" onclick="openDetail('${mode}', ${originalIndex})">
+                        <div class="card-img-wrapper">
+                            <img src="${item.image}" class="card-img" alt="${item.name}">
+                        </div>
+                        <div class="card-body">
+                            <h3>${item.name}</h3>
+                            <p>${item.desc}</p>
+                            <span class="badge">${item.tag}</span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function filterCards() { 
+            render(document.getElementById("searchInput").value); 
+        }
+
+        function openDetail(m, idx) {
+            const item = contentData[m][idx];
+            document.getElementById("modalTitle").innerText = item.name;
+            document.getElementById("modalImg").src = item.image;
+            document.getElementById("modalDesc").innerText = item.desc;
+            document.getElementById("modalAddr").innerText = item.addr;
+            document.getElementById("modalTime").innerText = "Jam Operasional: " + item.time;
+            document.getElementById("modalPhone").innerText = "Kontak: " + item.phone;
+            document.getElementById("modalPrice").innerText = "Estimasi: " + item.price;
+            document.getElementById("modalWifi").innerText = "Konektivitas: " + item.wifi;
+            document.getElementById("detailModal").classList.add("active");
+        }
+
+        function closeDetail() { document.getElementById("detailModal").classList.remove("active"); }
+        function openAbout() { document.getElementById("aboutModal").classList.add("active"); }
+        function closeAbout() { document.getElementById("aboutModal").classList.remove("active"); }
+        
+        function goToHome() { 
+            document.getElementById("mainContentSection").style.display = "none"; 
+            document.getElementById("welcomeScreen").style.display = "flex";
+            document.getElementById("searchInput").value = "";
+            audio.pause(); playing = false; updateUI();
+        }
+
+        function toggleMusic() {
+            playing = !playing;
+            if (playing) {
+                audio.play().catch(e => {
+                    console.log("Interaksi user diperlukan terlebih dahulu");
+                    playing = false;
+                    updateUI();
+                });
+            } else {
+                audio.pause();
+            }
+            updateUI();
+        }
+
+        function updateUI() {
+            document.getElementById("playIcon").className = playing ? "fa-solid fa-pause" : "fa-solid fa-play";
+            document.getElementById("bars").className = playing ? "music-bars" : "music-bars paused";
+            document.getElementById("trackName").innerText = mode === "work" ? "Lo-Fi Work Beats" : "Night EDM Remix";
+        }
+
+        function closeModal(e) { 
+            if(e.target.classList.contains('modal-overlay')) {
+                e.target.classList.remove('active');
+            }
         }
     </script>
 </body>
