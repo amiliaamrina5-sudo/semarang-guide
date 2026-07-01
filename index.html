@@ -3,312 +3,984 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amilia's Directory - Coffee & Party</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        coffeeBg: '#FDFBF7',
-                        coffeeCard: '#FFFFFF',
-                        coffeeText: '#4A3728',
-                        partyBg: '#121214',
-                        partyCard: '#1E1E22',
-                        partyText: '#E2E8F0',
-                        accentNeon: '#FF2E93',
-                    }
-                }
-            }
-        }
-    </script>
+    <title>NEST. - Hidden Coffee & Nightlife Guide of Semarang</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Swiper JS CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
     <style>
-        .smooth-scroll { scroll-behavior: smooth; }
+        /* CSS VARIABLES FOR PREMIUM ELEGAN THEME */
+        :root {
+            --bg-opening: #0b0c10;
+            --font-heading: 'Cormorant Garamond', serif;
+            --font-body: 'Poppins', sans-serif;
+            
+            /* Coffee Mode Default Styles */
+            --theme-bg: #FAF6F0;
+            --theme-text: #2C1A11;
+            --theme-accent: #8B5A2B;
+            --theme-card-bg: rgba(255, 255, 255, 0.75);
+            --theme-border: rgba(139, 90, 43, 0.2);
+            --theme-shadow: rgba(139, 90, 43, 0.1);
+        }
+
+        /* Nightlife Theme Modifier */
+        body.nightlife-mode {
+            --theme-bg: #0D0204;
+            --theme-text: #F5EBE6;
+            --theme-accent: #D4AF37;
+            --theme-card-bg: rgba(26, 4, 9, 0.75);
+            --theme-border: rgba(128, 0, 32, 0.4);
+            --theme-shadow: rgba(212, 175, 55, 0.1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--theme-bg);
+            color: var(--theme-text);
+            transition: background-color 0.8s ease, color 0.8s ease;
+            overflow-x: hidden;
+        }
+
+        /* Custom Cursor */
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--theme-accent);
+            border-radius: 50%;
+            position: fixed;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9999;
+            transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.8s ease;
+        }
+
+        /* Loading Screen */
+        #loading-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #0b0c10;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #FAF6F0;
+            transition: opacity 1s ease, vertical-align 1s;
+        }
+        .loader-logo {
+            font-family: var(--font-heading);
+            font-size: 4rem;
+            font-weight: 700;
+            letter-spacing: 5px;
+            margin-bottom: 10px;
+            animation: fadeInOut 2s infinite ease-in-out;
+        }
+
+        /* Hero / Opening Section */
+        #hero {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background-color: #000;
+        }
+        .video-bg {
+            position: absolute;
+            top: 50%; left: 50%;
+            min-width: 100%; min-height: 100%;
+            width: auto; height: auto;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            object-fit: cover;
+            opacity: 0.4;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(11,12,16,0.3), #0b0c10);
+            z-index: 2;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            color: #FAF6F0;
+            text-align: center;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: 5.5rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            margin-bottom: 5px;
+        }
+        .hero-subtitle {
+            font-size: 1.25rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #d1d1d1;
+            margin-bottom: 35px;
+        }
+        .hero-btn {
+            background: transparent;
+            border: 1px solid #FAF6F0;
+            color: #FAF6F0;
+            padding: 12px 35px;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 15px rgba(255,255,255,0.1);
+        }
+        .hero-btn:hover {
+            background-color: #FAF6F0;
+            color: #0b0c10;
+            box-shadow: 0 0 25px rgba(255,255,255,0.4);
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: transparent;
+            transition: background-color 0.5s ease, padding 0.5s ease;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .navbar.scrolled {
+            background-color: var(--theme-bg);
+            padding: 12px 0;
+            border-bottom: 1px solid var(--theme-border);
+            box-shadow: 0 5px 20px var(--theme-shadow);
+        }
+        .navbar-brand {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--theme-text) !important;
+            letter-spacing: 2px;
+        }
+        .nav-link {
+            color: var(--theme-text) !important;
+            font-size: 0.9rem;
+            font-weight: 400;
+            margin: 0 15px;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        .nav-link:hover {
+            opacity: 1;
+            color: var(--theme-accent) !important;
+        }
+
+        /* Mode Selector Tab Dashboard */
+        .mode-toggle-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        .mode-btn {
+            background: transparent;
+            border: 1px solid var(--theme-border);
+            color: var(--theme-text);
+            padding: 12px 30px;
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            transition: all 0.4s ease;
+            opacity: 0.5;
+        }
+        .mode-btn.active {
+            opacity: 1;
+            background-color: var(--theme-accent);
+            color: #FFF !important;
+            border-color: var(--theme-accent);
+            box-shadow: 0 4px 15px var(--theme-shadow);
+        }
+
+        /* Controls Section (Search & Filter) */
+        .search-box {
+            background: transparent;
+            border: 1px solid var(--theme-border);
+            color: var(--theme-text);
+            padding: 12px 20px;
+            border-radius: 0;
+        }
+        .search-box:focus {
+            background: transparent;
+            color: var(--theme-text);
+            border-color: var(--theme-accent);
+            box-shadow: none;
+        }
+        .filter-chip {
+            display: inline-block;
+            padding: 6px 16px;
+            border: 1px solid var(--theme-border);
+            margin: 5px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .filter-chip.active {
+            background-color: var(--theme-accent);
+            color: #fff;
+            border-color: var(--theme-accent);
+        }
+
+        /* Premium Minimalist Cards */
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .custom-card {
+            background: var(--theme-card-bg);
+            border: 1px solid var(--theme-border);
+            border-radius: 0;
+            overflow: hidden;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
+            margin-bottom: 30px;
+        }
+        .custom-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px var(--theme-shadow);
+        }
+        .card-img-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/10;
+            overflow: hidden;
+        }
+        .card-img-wrapper img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .custom-card:hover .card-img-wrapper img {
+            transform: scale(1.06);
+        }
+        .card-body-content {
+            padding: 25px;
+        }
+        .card-place-title {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .card-info-line {
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card-divider {
+            border-top: 1px solid var(--theme-border);
+            margin: 20px 0 15px 0;
+        }
+        .card-action-btn {
+            background: transparent;
+            border: none;
+            color: var(--theme-accent);
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: gap 0.3s;
+        }
+        .custom-card:hover .card-action-btn {
+            gap: 12px;
+        }
+
+        /* Glassmorphic Popup Modal */
+        .modal-content {
+            background: var(--theme-card-bg);
+            border: 1px solid var(--theme-border);
+            border-radius: 0;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            color: var(--theme-text);
+            padding: 20px;
+        }
+        .modal-header {
+            border-bottom: 1px solid var(--theme-border);
+        }
+        .modal-title-custom {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        .modal-body-info p {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .modal-footer {
+            border-top: 1px solid var(--theme-border);
+        }
+        .btn-maps {
+            background-color: var(--theme-accent);
+            color: #fff;
+            border: none;
+            border-radius: 0;
+            padding: 10px 25px;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+        .btn-maps:hover {
+            background-color: var(--theme-text);
+            color: var(--theme-bg);
+        }
+
+        /* Multimedia Audio Player Component */
+        .audio-player-widget {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: var(--theme-card-bg);
+            border: 1px solid var(--theme-border);
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 999;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px var(--theme-shadow);
+            color: var(--theme-text);
+        }
+        .audio-control-btn {
+            background: var(--theme-accent);
+            border: none;
+            width: 35px; height: 35px;
+            border-radius: 50%;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .audio-track-info {
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Gallery Section (Swiper) */
+        .swiper {
+            width: 100%;
+            padding-top: 20px;
+            padding-bottom: 50px;
+        }
+        .swiper-slide {
+            background-position: center;
+            background-size: cover;
+            width: 300px;
+            height: 400px;
+            border: 1px solid var(--theme-border);
+        }
+        .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Floating Back To Top */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px; right: 30px;
+            width: 45px; height: 45px;
+            background: var(--theme-accent);
+            color: white;
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s;
+        }
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Footer & About Card Design */
+        .about-card {
+            background: var(--theme-card-bg);
+            border: 1px solid var(--theme-border);
+            padding: 40px;
+            margin-top: 40px;
+        }
+        footer {
+            border-top: 1px solid var(--theme-border);
+            padding: 30px 0;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            opacity: 0.7;
+        }
+
+        /* Animations */
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 3.5rem; }
+            .section-title { font-size: 2.5rem; }
+            .custom-cursor { display: none; }
+            .audio-player-widget { bottom: unset; top: 20px; left: unset; right: 20px; z-index: 1050; padding: 5px 12px;}
+        }
     </style>
 </head>
-<body class="smooth-scroll font-sans bg-gray-50 text-gray-900 transition-colors duration-300" id="main-body">
+<body>
 
-    <!-- HERO SECTION -->
-    <header class="relative bg-cover bg-center h-[35vh] flex flex-col justify-center items-center text-center px-4" style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1200');">
-        <h1 class="text-3xl md:text-5xl font-extrabold text-white tracking-wide mb-2">Amilia's Directory</h1>
-        <p class="text-gray-200 text-sm md:text-base">Cari spot ngopi santai atau tempat party paling hits pilihanmu!</p>
-    </header>
+    <!-- Custom Floating Cursor Effect -->
+    <div class="custom-cursor" id="cursor"></div>
 
-    <!-- FEATURED GALLERY SECTION (8 Foto Unggulan) -->
-    <section class="py-12 px-4 md:px-8 max-w-6xl mx-auto">
-        <div class="flex flex-col items-center mb-8">
-            <h2 class="text-2xl font-bold tracking-tight text-gray-800 border-b-2 border-pink-500 pb-1">✨ FEATURED GALLERY</h2>
-            <p class="text-gray-500 text-xs mt-1">8 Spot pilihan paling luks minggu ini</p>
-        </div>
-        
-        <!-- Grid Galeri 8 Foto -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-            <div class="group relative order-hidden rounded-2xl overflow-hidden aspect-square shadow-sm bg-gray-200">
-                <img src="Arah Coffee.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" alt="Arah Coffee">
-                <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 p-3"><p class="text-white text-xs font-semibold">Arah Coffee</p></div>
-            </div>
-            <div class="group relative order-hidden rounded-2xl overflow-hidden aspect-square shadow-sm bg-gray-200">
-                <img src="Kayo Coffee.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" alt="Kayo Coffee">
-                <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 p-3"><p class="text-white text-xs font-semibold">Kayo Coffee & Eatery</p></div>
-            </div>
-            <div class="group relative order-hidden rounded-2xl overflow-hidden aspect-square shadow-sm bg-gray-200">
-                <img src="Lupa Waktu.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" alt="Lupa Waktu">
-                <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 p-3"><p class="text-white text-xs font-semibold">Lupa Waktu</p></div>
-            </div>
-            <div class="group relative order-hidden rounded-2xl overflow-hidden aspect-square shadow-sm bg-gray-200">
-                <img src="Celcio Coffee.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" alt="Celcio">
-                <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 p-3"><p class="text-white text-xs font-semibold">Celcio</p></div>
-            </div>
-            <div class="group relative order-hidden rounded-2xl overflow-hidden aspect-square shadow-sm bg-gray-200">
-                <img src="Soci Club.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" alt="Soci Club">
-                <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 p-3"><p class="text-white text-xs font-semibold">Soci Club</p></div>
-            </div>
-            <div class="group relative order-hidden rounded-2xl overflow-hidden aspect-square shadow-sm bg-gray-200">
-                <img src="Pots Bar.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" alt="Pots Bar">
-                <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 p-3"><p class="text-white text-xs font-semibold">Pots Bar</p></div>
-            </div>
-            <div class="group relative order-hidden rounded-2xl overflow-hidden aspect-square shadow-sm bg-gray-200">
-                <img src="Tiger Club.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" alt="Tiger Club">
-                <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 p-3"><p class="text-white text-xs font-semibold">Tiger Club</p></div>
-            </div>
-            <div class="group relative order-hidden rounded-2xl overflow-hidden aspect-square shadow-sm bg-gray-200">
-                <img src="Live House.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" alt="Live House">
-                <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 p-3"><p class="text-white text-xs font-semibold">Live House</p></div>
-            </div>
+    <!-- 1. LOADING SCREEN -->
+    <div id="loading-screen">
+        <div class="loader-logo">NEST.</div>
+        <p style="font-size: 0.85rem; letter-spacing: 3px; text-transform: uppercase; opacity: 0.6;">Discover Semarang Gems</p>
+    </div>
+
+    <!-- AUDIO ELEMENTS (Amilia's GitHub Assets) -->
+    <audio id="audio-cafe" src="cafe.mpeg" loop></audio>
+    <audio id="audio-party" src="party.mpeg" loop></audio>
+
+    <!-- 2. OPENING HERO SECTION -->
+    <section id="hero">
+        <!-- Background Video Placeholder - Ganti URL video jika diinginkan -->
+        <video class="video-bg" autoplay muted loop playsinline>
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-city-lights-at-night-extended-shot-41716-large.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content" data-aos="zoom-out" data-aos-duration="1500">
+            <h1 class="hero-title">NEST.</h1>
+            <p class="hero-subtitle">Hidden Coffee & Nightlife Guide of Semarang</p>
+            <p class="mb-5 italic font-serif" style="opacity: 0.8; font-style: italic;">"Discover the city's finest hidden gems after golden hour."</p>
+            <button class="hero-btn" onclick="scrollToMain()">Explore Now</button>
         </div>
     </section>
 
-    <!-- UTILITY CONTROL (Search & Filter Tabs) -->
-    <section class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 py-4 px-4 md:px-8 shadow-sm">
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            
-            <!-- Tabs Filter -->
-            <div class="flex p-1 bg-gray-100 rounded-xl self-start">
-                <button onclick="filterCategory('all')" id="tab-all" class="px-5 py-2 rounded-lg text-sm font-semibold transition bg-white text-gray-900 shadow-sm">
-                    ✨ Semua
-                </button>
-                <button onclick="filterCategory('coffee')" id="tab-coffee" class="px-5 py-2 rounded-lg text-sm font-semibold transition text-gray-500 hover:text-gray-900">
-                    ☕ Coffee
-                </button>
-                <button onclick="filterCategory('party')" id="tab-party" class="px-5 py-2 rounded-lg text-sm font-semibold transition text-gray-500 hover:text-gray-900">
-                    🥳 Party
-                </button>
-            </div>
-
-            <!-- Search Bar -->
-            <div class="relative w-full md:w-80">
-                <input type="text" id="search-input" oninput="searchPlaces()" placeholder="Cari nama tempat..." class="w-full px-4 py-2 pl-10 pr-4 bg-gray-50 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 focus:bg-white transition">
-                <span class="absolute left-3 top-2.5 text-gray-400 text-sm">🔍</span>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- MAIN CONTENT DIRECTORY -->
-    <main class="py-12 px-4 md:px-8 max-w-6xl mx-auto min-h-[60vh]">
+    <!-- MAIN PLATFORM STRUCTURE -->
+    <div id="main-content" style="display: none;">
         
-        <!-- Grid Container -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="places-grid">
+        <!-- NAVBAR -->
+        <nav class="navbar navbar-expand-lg sticky-top" id="custom-navbar">
+            <div class="container">
+                <a class="navbar-brand" href="#">NEST.</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-link"><a class="nav-link p-0" href="#directory">Directory</a></li>
+                        <li class="nav-link"><a class="nav-link p-0" href="#gallery">Gallery</a></li>
+                        <li class="nav-link"><a class="nav-link p-0" href="#about">About</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 3. DIRECTORY SECTION (COFFEE & NIGHTLIFE WITH LIVE REAL-TIME FILTER) -->
+        <section id="directory" class="container py-5 my-4">
             
-            <!-- === COFFEE ITEMS === -->
-            <div class="place-card bg-coffeeCard text-coffeeText rounded-2xl shadow-sm border border-amber-100 overflow-hidden hover:shadow-md transition" data-category="coffee" data-name="arah coffee">
-                <img src="Arah Coffee.jpeg" class="w-full h-40 object-cover" alt="Arah Coffee">
-                <div class="p-4 flex flex-col justify-between h-32">
-                    <h3 class="font-bold text-base line-clamp-1">Arah Coffee</h3>
-                    <a href="https://maps.app.goo.gl/jW5NhJiG4Fznx2wP7?g_st=ic" target="_blank" class="block text-center bg-amber-700 hover:bg-amber-800 text-white text-xs font-semibold py-2 rounded-xl transition mt-2">Buka Rute Maps</a>
+            <!-- Tab Mode Toggle Switcher -->
+            <div class="mode-toggle-container" data-aos="fade-up">
+                <button class="mode-btn active" id="btn-coffee-mode" onclick="switchMode('coffee')"><i class="fa-solid fa-coffee me-2"></i> Coffee Spots</button>
+                <button class="mode-btn" id="btn-party-mode" onclick="switchMode('party')"><i class="fa-solid fa-martini-glass-citrus me-2"></i> Nightlife Spot</button>
+            </div>
+
+            <h2 class="section-title" id="dir-title" data-aos="fade-up">Hidden Coffee</h2>
+
+            <!-- Search & Dynamic Checkbox Filtering Panel -->
+            <div class="row g-4 mb-5 align-items-center" data-aos="fade-up">
+                <div class="col-md-4">
+                    <input type="text" id="search-input" class="form-control search-box" placeholder="Search by name or area...">
+                </div>
+                <div class="col-md-8">
+                    <div id="filter-chips-container" class="d-flex flex-wrap justify-content-md-end">
+                        <!-- Chips will generate automatically via JS -->
+                    </div>
                 </div>
             </div>
 
-            <div class="place-card bg-coffeeCard text-coffeeText rounded-2xl shadow-sm border border-amber-100 overflow-hidden hover:shadow-md transition" data-category="coffee" data-name="kayo coffee and eatery">
-                <img src="Kayo Coffee.jpeg" class="w-full h-40 object-cover" alt="Kayo Coffee & Eatery">
-                <div class="p-4 flex flex-col justify-between h-32">
-                    <h3 class="font-bold text-base line-clamp-1">Kayo Coffee & Eatery</h3>
-                    <a href="https://maps.app.goo.gl/eS9RvefQP6xK7zkp8?g_st=ic" target="_blank" class="block text-center bg-amber-700 hover:bg-amber-800 text-white text-xs font-semibold py-2 rounded-xl transition mt-2">Buka Rute Maps</a>
+            <!-- Directory Cards Grid Grid Layout -->
+            <div class="row" id="cards-grid">
+                <!-- Javascript will inject data directly here inside -->
+            </div>
+        </section>
+
+        <!-- 4. MULTIMEDIA SECTION (GALLERY SLIDER) -->
+        <section id="gallery" class="py-5" style="background-color: rgba(0,0,0,0.02);">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Aesthetic Space</h2>
+                
+                <div class="swiper mySwiper" data-aos="fade-up" data-aos-delay="200">
+                    <div class="swiper-wrapper">
+                        <!-- Pulling exactly from your repository files screenshot -->
+                        <div class="swiper-slide"><img src="Anantari Coffee.jpeg" alt="Anantari Coffee"></div>
+                        <div class="swiper-slide"><img src="Arah Coffee.jpeg" alt="Arah Coffee"></div>
+                        <div class="swiper-slide"><img src="Celcio Coffee.jpeg" alt="Celcio Coffee"></div>
+                        <div class="swiper-slide"><img src="Dirasa Kopi.jpeg" alt="Dirasa Kopi"></div>
+                        <div class="swiper-slide"><img src="Djournal Coffee.jpeg" alt="Djournal Coffee"></div>
+                        <div class="swiper-slide"><img src="Domestik Coffee.jpeg" alt="Domestik Coffee"></div>
+                        <div class="swiper-slide"><img src="Dromma Coffee.jpeg" alt="Dromma Coffee"></div>
+                        <div class="swiper-slide"><img src="Kayo Coffee.jpeg" alt="Kayo Coffee"></div>
+                        <div class="swiper-slide"><img src="Kopitagram.jpeg" alt="Kopitagram"></div>
+                        <div class="swiper-slide"><img src="Lupa Waktu.jpeg" alt="Lupa Waktu"></div>
+                        <div class="swiper-slide"><img src="Helen's.jpeg" alt="Helen's"></div>
+                        <div class="swiper-slide"><img src="Live House.jpeg" alt="Live House"></div>
+                        <div class="swiper-slide"><img src="ONYX.ENT.jpeg" alt="ONYX"></div>
+                        <div class="swiper-slide"><img src="Pots Bar.jpeg" alt="Pots Bar"></div>
+                        <div class="swiper-slide"><img src="Red Hare Bar.jpeg" alt="Red Hare Bar"></div>
+                        <div class="swiper-slide"><img src="Soci Club.jpeg" alt="Soci Club"></div>
+                        <div class="swiper-slide"><img src="Tiger Club.jpeg" alt="Tiger Club"></div>
+                    </div>
+                    <div class="swiper-pagination"></div>
                 </div>
             </div>
+        </section>
 
-            <div class="place-card bg-coffeeCard text-coffeeText rounded-2xl shadow-sm border border-amber-100 overflow-hidden hover:shadow-md transition" data-category="coffee" data-name="lupa waktu">
-                <img src="Lupa Waktu.jpeg" class="w-full h-40 object-cover" alt="Lupa Waktu">
-                <div class="p-4 flex flex-col justify-between h-32">
-                    <h3 class="font-bold text-base line-clamp-1">Lupa Waktu</h3>
-                    <a href="https://maps.app.goo.gl/McmKX4Eu8HN6MgpRA?g_st=ic" target="_blank" class="block text-center bg-amber-700 hover:bg-amber-800 text-white text-xs font-semibold py-2 rounded-xl transition mt-2">Buka Rute Maps</a>
+        <!-- 5. ABOUT SECTION (ACADEMIC ASSIGNMENT DATA) -->
+        <section id="about" class="container py-5 my-5">
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center" data-aos="fade-up">
+                    <div class="about-card">
+                        <h3 class="font-serif mb-4" style="font-family: var(--font-heading); font-size: 2.5rem;">About The Project</h3>
+                        <p class="mb-4" style="font-weight: 300; line-height: 1.8;"><strong>NEST.</strong> is a curated interactive platform showcasing Semarang's nocturnal landscape. Developed specifically as an integration of modern structural front-end implementation and rich multimedia systems deployment.</p>
+                        <hr class="my-4" style="border-color: var(--theme-border); opacity: 0.5;">
+                        <div class="row text-start justify-content-center px-3">
+                            <div class="col-sm-6 mb-2"><strong>Nama:</strong> Amilia Amrina Rosyada</div>
+                            <div class="col-sm-6 mb-2"><strong>NIM:</strong> 143251005</div>
+                            <div class="col-sm-12 text-sm-center mt-2"><strong>Mata Kuliah:</strong> Pemrograman Web dan Multimedia</div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <div class="place-card bg-coffeeCard text-coffeeText rounded-2xl shadow-sm border border-amber-100 overflow-hidden hover:shadow-md transition" data-category="coffee" data-name="celcio">
-                <img src="Celcio Coffee.jpeg" class="w-full h-40 object-cover" alt="Celcio">
-                <div class="p-4 flex flex-col justify-between h-32">
-                    <h3 class="font-bold text-base line-clamp-1">Celcio</h3>
-                    <a href="https://maps.app.goo.gl/Rp57uge2NcK3Neq86?g_st=ic" target="_blank" class="block text-center bg-amber-700 hover:bg-amber-800 text-white text-xs font-semibold py-2 rounded-xl transition mt-2">Buka Rute Maps</a>
-                </div>
+        <!-- 6. FOOTER -->
+        <footer class="text-center">
+            <div class="container">
+                <p class="mb-0">&copy; 2026 NEST. Semarang Guide. All Rights Reserved.</p>
             </div>
+        </footer>
+    </div>
 
-            <div class="place-card bg-coffeeCard text-coffeeText rounded-2xl shadow-sm border border-amber-100 overflow-hidden hover:shadow-md transition" data-category="coffee" data-name="anantari coffee">
-                <img src="Anantari Coffee.jpeg" class="w-full h-40 object-cover" alt="Anantari Coffee">
-                <div class="p-4 flex flex-col justify-between h-32">
-                    <h3 class="font-bold text-base line-clamp-1">Anantari Coffee</h3>
-                    <a href="https://maps.app.goo.gl/MUvqCZypsEFP1jNB9?g_st=ic" target="_blank" class="block text-center bg-amber-700 hover:bg-amber-800 text-white text-xs font-semibold py-2 rounded-xl transition mt-2">Buka Rute Maps</a>
-                </div>
-            </div>
-
-            <div class="place-card bg-coffeeCard text-coffeeText rounded-2xl shadow-sm border border-amber-100 overflow-hidden hover:shadow-md transition" data-category="coffee" data-name="kopitagram">
-                <img src="Kopitagram.jpeg" class="w-full h-40 object-cover" alt="Kopitagram">
-                <div class="p-4 flex flex-col justify-between h-32">
-                    <h3 class="font-bold text-base line-clamp-1">Kopitagram</h3>
-                    <a href="https://maps.app.goo.gl/XoNoRCu3amE2Luuu6?g_st=ic" target="_blank" class="block text-center bg-amber-700 hover:bg-amber-800 text-white text-xs font-semibold py-2 rounded-xl transition mt-2">Buka Rute Maps</a>
-                </div>
-            </div>
-
-            <div class="place-card bg-coffeeCard text-coffeeText rounded-2xl shadow-sm border border-amber-100 overflow-hidden hover:shadow-md transition" data-category="coffee" data-name="domestik coffee">
-                <img src="Domestik Coffee.jpeg" class="w-full h-40 object-cover" alt="Domestik Coffee">
-                <div class="p-4 flex flex-col justify-between h-32">
-                    <h3 class="font-bold text-base line-clamp-1">Domestik Coffee</h3>
-                    <a href="https://maps.app.goo.gl/NTaAnevT69KH3LQm9?g_st=ic" target="_blank" class="block text-center bg-amber-700 hover:bg-amber-800 text-white text-xs font-semibold py-2 rounded-xl transition mt-2">Buka Rute Maps</a>
-                </div>
-            </div>
-
-            <div class="place-card bg-coffeeCard text-coffeeText rounded-2xl shadow-sm border border-amber-100 overflow-hidden hover:shadow-md transition" data-category="coffee" data-name="dromma coffee">
-                <img src="Dromma Coffee.jpeg" class="w-full h-40 object-cover" alt="Dromma Coffee">
-                <div class="p-4 flex flex-col justify-between h-32">
-                    <h3 class="font-bold text-base line-clamp-1">Dromma Coffee</h3>
-                    <a href="https://maps.app.goo.gl/5JUU7VoUZo893mdv6?g_st=ic" target="_blank" class="block text-center bg-amber-700 hover:bg-amber-800 text-white text-xs font-semibold py-2 rounded-xl transition mt-2">Buka Rute Maps</a>
-                </div>
-            </div>
-
-            <div class="place-card bg-coffeeCard text-coffeeText rounded-2xl shadow-sm border border-amber-100 overflow-hidden hover:shadow-md transition" data-category="coffee" data-name="djournal coffee">
-                <img src="Djournal Coffee.jpeg" class="w-full h-40 object-cover" alt="Djournal Coffee">
-                <div class="p-4 flex flex-col justify-between h-32">
-                    <h3 class="font-bold text-base line-clamp-1">Djournal Coffee</h3>
-                    <a href="https://maps.app.goo.gl/7R1nf77aq8JhvAx6A?g_st=ic" target="_blank" class="block text-center bg-amber-700 hover:bg-amber-800 text-white text-xs font-semibold py-2 rounded-xl transition mt-2">Buka Rute Maps</a>
-                </div>
-            </div>
-
-            <div class="place-card bg-coffeeCard text-coffeeText rounded-2xl shadow-sm border border-amber-100 overflow-hidden hover:shadow-md transition" data-category="coffee" data-name="dirasa kopi">
-                <img src="Dirasa Kopi.jpeg" class="w-full h-40 object-cover" alt="Dirasa Kopi">
-                <div class="p-4 flex flex-col justify-between h-32">
-                    <h3 class="font-bold text-base line-clamp-1">Dirasa Kopi</h3>
-                    <a href="https://maps.app.goo.gl/ztWaKdqL2GpD2yzt8?g_st=ic" target="_blank" class="block text-center bg-amber-700 hover:bg-amber-800 text-white text-xs font-semibold py-2 rounded-xl transition mt-2">Buka Rute Maps</a>
-                </div>
-            </div>
-
-
-            <!-- === PARTY ITEMS === -->
-            <div class="place-card bg-partyCard text-partyText rounded-2xl border border-gray-800 overflow-hidden hover:border-pink-500/50 hover:shadow-[0_0_15px_rgba(255,46,147,0.2)] transition duration-300" data-category="party" data-name="soci club">
-                <img src="Soci Club.jpeg" class="w-full h-40 object-cover" alt="Soci Club">
-                <div class="p-4 flex flex-col justify-between h-32">
-                    <h3 class="font-bold text-base text-white line-clamp-1">Soci Club</h3>
-                    <a href="https://maps.app.goo.gl/2s49mcXR2vaaByq28?g_st=ic" target="_blank" class="block text-center bg-accentNeon hover:bg-pink-700 text-white text-xs font-bold py-2 rounded-xl transition mt-2">Dapatkan Rute</a>
-                </div>
-            </div>
-
-            <div class="place-card bg-partyCard text-partyText rounded-2xl border border-gray-800 overflow-hidden hover:border-pink-500/50 hover:shadow-[0_0_15px_rgba(255,46,147,0.2)] transition duration-300" data-category="party" data-name="pots bar">
-                <img src="Pots Bar.jpeg" class="w-full h-40 object-cover" alt="Pots Bar">
-                <div class="p-4 flex flex-col justify-between h-32">
-                    <h3 class="font-bold text-base text-white line-clamp-1">Pots Bar</h3>
-                    <a href="https://maps.app.goo.gl/ah23WUbnZBz5YjCQA?g_st=ic" target="_blank" class="block text-center bg-accentNeon hover:bg-pink-700 text-white text-xs font-bold py-2 rounded-xl transition mt-2">Dapatkan Rute</a>
-                </div>
-            </div>
-
-            <div class="place-card bg-partyCard text-partyText rounded-2xl border border-gray-800 overflow-hidden hover:border-pink-500/50 hover:shadow-[0_0_15px_rgba(255,46,147,0.2)] transition duration-300" data-category="party" data-name="tiger club">
-                <img src="Tiger Club.jpeg" class="w-full h-40 object-cover" alt="Tiger Club">
-                <div class="p-4 flex flex-col justify-between h-32">
-                    <h3 class="font-bold text-base text-white line-clamp-1">Tiger Club</h3>
-                    <a href="https://maps.app.goo.gl/h1m4LQgsFUFjgffw7?g_st=ic" target="_blank" class="block text-center bg-accentNeon hover:bg-pink-700 text-white text-xs font-bold py-2 rounded-xl transition mt-2">Dapatkan Rute</a>
-                </div>
-            </div>
-
-            <div class="place-card bg-partyCard text-partyText rounded-2xl border border-gray-800 overflow-hidden hover:border-pink-500/50 hover:shadow-[0_0_15px_rgba(255,46,147,0.2)] transition duration-300" data-category="party" data-name="live house">
-                <img src="Live House.jpeg" class="w-full h-40 object-cover" alt="Live House">
-                <div class="p-4 flex flex-col justify-between h-32">
-                    <h3 class="font-bold text-base text-white line-clamp-1">Live House</h3>
-                    <a href="https://maps.app.goo.gl/bCNVxdRPdeUQG8Qz8?g_st=ic" target="_blank" class="block text-center bg-accentNeon hover:bg-pink-700 text-white text-xs font-bold py-2 rounded-xl transition mt-2">Dapatkan Rute</a>
-                </div>
-            </div>
-
-            <div class="place-card bg-partyCard text-partyText rounded-2xl border border-gray-800 overflow-hidden hover:border-pink-500/50 hover:shadow-[0_0_15px_rgba(255,46,147,0.2)] transition duration-300" data-category="party" data-name="helen's">
-                <img src="Helen's.jpeg" class="w-full h-40 object-cover" alt="Helen's">
-                <div class="p-4 flex flex-col justify-between h-32">
-                    <h3 class="font-bold text-base text-white line-clamp-1">Helen’s</h3>
-                    <a href="https://maps.app.goo.gl/LkZxr6u7Hy7Vww7g6?g_st=ic" target="_blank" class="block text-center bg-accentNeon hover:bg-pink-700 text-white text-xs font-bold py-2 rounded-xl transition mt-2">Dapatkan Rute</a>
-                </div>
-            </div>
-
-            <div class="place-card bg-partyCard text-partyText rounded-2xl border border-gray-800 overflow-hidden hover:border-pink-500/50 hover:shadow-[0_0_15px_rgba(255,46,147,0.2)] transition duration-300" data-category="party" data-name="red hare bar">
-                <img src="Red Hare Bar.jpeg" class="w-full h-40 object-cover" alt="Red Hare Bar">
-                <div class="p-4 flex flex-col justify-between h-32">
-                    <h3 class="font-bold text-base text-white line-clamp-1">Red Hare Bar</h3>
-                    <a href="https://maps.app.goo.gl/zUfh9LF43adCND337?g_st=ic" target="_blank" class="block text-center bg-accentNeon hover:bg-pink-700 text-white text-xs font-bold py-2 rounded-xl transition mt-2">Dapatkan Rute</a>
-                </div>
-            </div>
-
-            <div class="place-card bg-partyCard text-partyText rounded-2xl border border-gray-800 overflow-hidden hover:border-pink-500/50 hover:shadow-[0_0_15px_rgba(255,46,147,0.2)] transition duration-300" data-category="party" data-name="onyx.ent">
-                <img src="ONYX.ENT.jpeg" class="w-full h-40 object-cover" alt="Onyx.Ent">
-                <div class="p-4 flex flex-col justify-between h-32">
-                    <h3 class="font-bold text-base text-white line-clamp-1">Onyx.Ent</h3>
-                    <a href="https://maps.app.goo.gl/hqBmjLbvjhc9wAAu9?g_st=ic" target="_blank" class="block text-center bg-accentNeon hover:bg-pink-700 text-white text-xs font-bold py-2 rounded-xl transition mt-2">Dapatkan Rute</a>
-                </div>
-            </div>
-
+    <!-- FLOATING INTERACTIVE AUDIO PLAYER COMPONENT -->
+    <div class="audio-player-widget" id="audio-widget" style="display: none;">
+        <button class="audio-control-btn" onclick="toggleAudio()"><i class="fa-solid fa-play" id="audio-icon"></i></button>
+        <div>
+            <div class="audio-track-info" id="audio-track-title">Ambient Sound</div>
+            <div style="font-size: 0.65rem; opacity: 0.6;" id="audio-status">Status: Paused</div>
         </div>
-    </main>
+    </div>
 
-    <!-- FOOTER -->
-    <footer class="bg-gray-950 text-gray-500 text-center py-6 border-t border-gray-900 text-xs mt-12">
-        <p>© 2026 Designed for Amilia. All Rights Reserved.</p>
-    </footer>
+    <!-- BACK TO TOP FLOATING BUTTON -->
+    <button class="back-to-top" id="btn-back-to-top" onclick="scrollToTop()"><i class="fa-solid fa-arrow-up"></i></button>
 
-    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    <!-- DETAIL POPUP MODAL CONTAINER -->
+    <div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title-custom" id="modalPlaceName">Place Name</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="filter: invert(0.5);"></button>
+                </div>
+                <div class="modal-body modal-body-info">
+                    <p><strong><i class="fa-solid fa-map-marker-alt text-muted"></i> Alamat:</strong> <span id="modalAddress"></span></p>
+                    <p><strong><i class="fa-solid fa-clock text-muted"></i> Jam Operasional:</strong> <span id="modalHours"></span></p>
+                    <p><strong><i class="fa-solid fa-phone text-muted"></i> Kontak:</strong> <span id="modalPhone"></span></p>
+                    <p><strong><i class="fa-solid fa-star text-accent"></i> Fasilitas / Vibe:</strong> <span id="modalCategories"></span></p>
+                </div>
+                <div class="modal-footer justify-content-start">
+                    <a href="#" id="modalMapsLink" target="_blank" class="btn btn-maps w-100 text-center"><i class="fa-solid fa-location-dot me-2"></i> Buka Google Maps</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CORE EXTERNAL SCRIPTS VIA CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
     <script>
-        let currentCategory = 'all';
+        // CLIENT DATABASE INJECTED VIA AMILIA'S SOURCE DATA
+        const placesData = [
+            {
+                id: 1, type: "coffee", name: "ARAH Coffee - Bike to Heritage", area: "Semarang Utara",
+                hours: "Senin-Minggu 24 jam", address: "Jl. Cendrawasih No. 40, Tj. Mas, Kec. Semarang Utara, Kota Semarang, Jawa Tengah 50174",
+                phone: "+62 81119161005", maps: "https://maps.app.goo.gl/jW5NhJiG4Fznx2wP7?g_st=ic",
+                img: "Arah Coffee.jpeg", tags: ["24 Jam", "Outdoor", "Indoor", "Smoking Area", "AC", "WiFi", "Banyak Colokan"]
+            },
+            {
+                id: 2, type: "coffee", name: "Kayo Coffee and Eatery", area: "Semarang Tengah",
+                hours: "Senin - Minggu 09.00 - 00.00", address: "Jl. Melati Selatan No.8A, Brumbungan, Kec. Semarang Tengah, Kota Semarang, Jawa Tengah 50135",
+                phone: "+62 82173692019", maps: "https://maps.app.goo.gl/eS9RvefQP6xK7zkp8?g_st=ic",
+                img: "Kayo Coffee.jpeg", tags: ["Outdoor", "Indoor", "AC", "WiFi"]
+            },
+            {
+                id: 3, type: "coffee", name: "Lupa Waktu Coffee", area: "Tembalang",
+                hours: "Senin - Minggu 24 jam", address: "Jl. Banyu Putih Raya, Tembalang, Kec. Tembalang, Kota Semarang, Jawa Tengah 50275",
+                phone: "+62 85117805576", maps: "https://maps.app.goo.gl/McmKX4Eu8HN6MgpRA?g_st=ic",
+                img: "Lupa Waktu.jpeg", tags: ["24 Jam", "Outdoor", "Indoor", "Smoking Area", "WiFi", "Banyak Colokan"]
+            },
+            {
+                id: 4, type: "coffee", name: "Celcio Coffee", area: "Gajahmungkur",
+                hours: "Senin - Minggu 12.00 - 00.00", address: "Gajahmungkur Jl. Sumbing No.IV, RT.06/RW.03, Bendungan, Kec. Gajahmungkur, Kota Semarang, Jawa Tengah 50231",
+                phone: "+62 82314930070", maps: "https://maps.app.goo.gl/Rp57uge2NcK3Neq86?g_st=ic",
+                img: "Celcio Coffee.jpeg", tags: ["Indoor", "AC", "WiFi", "Banyak Colokan"]
+            },
+            {
+                id: 5, type: "coffee", name: "Anantari Coffee", area: "Tembalang",
+                hours: "Senin - Kamis 10.00 - 23.00, Jumat - Minggu 10.00 - 00.00", address: "Jl. Jangli Gabeng, Jangli, Kec. Tembalang, Kota Semarang, Jawa Tengah 50274",
+                phone: "+62 82135759015", maps: "https://maps.app.goo.gl/MUvqCZypsEFP1jNB9?g_st=ic",
+                img: "Anantari Coffee.jpeg", tags: ["Outdoor", "Indoor", "Smoking Area", "AC", "WiFi"]
+            },
+            {
+                id: 6, type: "coffee", name: "Kopitagram", area: "Semarang Timur",
+                hours: "Senin-Kamis 08.00-00.00, Jumat-Sabtu 08.00-02.00, Minggu 08.00-00.00", address: "Dr. Cipto Jalan Dokter Cipto No.111, Sarirejo, Kec. Semarang Timur, Kota Semarang, Jawa Tengah 50124",
+                phone: "+62 87780774318", maps: "https://maps.app.goo.gl/XoNoRCu3amE2Luuu6?g_st=ic",
+                img: "Kopitagram.jpeg", tags: ["Outdoor", "Indoor", "AC", "WiFi", "Banyak Colokan"]
+            },
+            {
+                id: 7, type: "coffee", name: "Domestik Coffee", area: "Semarang Selatan",
+                hours: "Senin-Minggu 06.00-23.00", address: "Jl. Menteri Supeno No.38, Mugassari, Kec. Semarang Selatan, Kota Semarang, Jawa Tengah 50249",
+                phone: "+62 85179601868", maps: "https://maps.app.goo.gl/NTaAnevT69KH3LQm9?g_st=ic",
+                img: "Domestik Coffee.jpeg", tags: ["Outdoor", "Indoor", "Smoking Area", "AC", "WiFi"]
+            },
+            {
+                id: 8, type: "coffee", name: "Dromma Coffee", area: "Semarang Tengah",
+                hours: "Senin-Minggu 08.00-22.00", address: "Jl. Gajahmada, Kembangsari, Kec. Semarang Tengah, Kota Semarang, Jawa Tengah, 50133",
+                phone: "+62 81217121319", maps: "https://maps.app.goo.gl/5JUU7VoUZo893mdv6?g_st=ic",
+                img: "Dromma Coffee.jpeg", tags: ["Indoor", "AC", "WiFi"]
+            },
+            {
+                id: 9, type: "coffee", name: "Djournal Coffee", area: "Semarang Utara",
+                hours: "Senin-Jumat 09.00-20.00, Sabtu-Minggu 07.00-20.00", address: "Kota Lama Semarang Jl. Merak No.29, Tanjungmas, Kec. Semarang Utara, Kota Semarang, Jawa Tengah, 50174",
+                phone: "Tidak Tersedia", maps: "https://maps.app.goo.gl/7R1nf77aq8JhvAx6A?g_st=ic",
+                img: "Djournal Coffee.jpeg", tags: ["Indoor", "AC", "WiFi"]
+            },
+            {
+                id: 10, type: "coffee", name: "Dirasa Kopi", area: "Gajahmungkur",
+                hours: "Senin-Minggu 24 jam", address: "Mugassari, Semarang Selatan RT 008 RW 006, Kec. Gajahmungkur, Kota Semarang, Jawa Tengah 50231",
+                phone: "+62 81227282527", maps: "https://maps.app.goo.gl/ztWaKdL2GpD2yzt8?g_st=ic",
+                img: "Dirasa Kopi.jpeg", tags: ["24 Jam", "Outdoor", "Smoking Area", "WiFi"]
+            },
+            {
+                id: 11, type: "party", name: "Soci Club", area: "Semarang Barat",
+                hours: "Senin-Minggu 21.00-04.00", address: "Jl. Anjasmoro Raya E1 No.8, Tawangsari, Kec. Semarang Barat, Kota Semarang, Jawa Tengah 50144",
+                phone: "+62 82281113336", maps: "https://maps.app.goo.gl/2s49mcXR2vaaByq28?g_st=ic",
+                img: "Soci Club.jpeg", tags: ["Club", "DJ", "Lounge"]
+            },
+            {
+                id: 12, type: "party", name: "Pots Bar", area: "Semarang Selatan",
+                hours: "Senin-Minggu 18.00-03.00", address: "Jl. Tri Lomba Juang No.5, Mugassari, Kec. Semarang Sel., Kota Semarang, Jawa Tengah 50249",
+                phone: "+62 8112671413", maps: "https://maps.app.goo.gl/ah23WUbnZBz5YjCQA?g_st=ic",
+                img: "Pots Bar.jpeg", tags: ["Bar", "Lounge", "Live Music"]
+            },
+            {
+                id: 13, type: "party", name: "HW Tiger Club", area: "Semarang Utara",
+                hours: "Senin-Minggu 20.00-01.00", address: "Semarang Jl. Cendrawasih No.24, Tj. Mas, Kec. Semarang Utara, Kota Semarang, Jawa Tengah 50174",
+                phone: "+62 8111624898", maps: "https://maps.app.goo.gl/h1m4LQgsFUFjgffw7?g_st=ic",
+                img: "Tiger Club.jpeg", tags: ["Club", "DJ"]
+            },
+            {
+                id: 14, type: "party", name: "HW Live House", area: "Semarang Utara",
+                hours: "Senin-Rabu 21.00-03.00, Kamis-Sabtu 21.00-04.00, Minggu 21.00-03.00", address: "Semarang Jl. Cendrawasih No.24, Tj. Mas, Kec. Semarang Utara, Kota Semarang, Jawa Tengah 50174",
+                phone: "+62 8111624898", maps: "https://maps.app.goo.gl/bCNVxdRPdeUQG8Qz8?g_st=ic",
+                img: "Live House.jpeg", tags: ["Bar", "Live Music", "Lounge"]
+            },
+            {
+                id: 15, type: "party", name: "Red Hare Bar", area: "Semarang Tengah",
+                hours: "Senin-Kamis 17.00-03.00, Jumat-Sabtu 17.00-03.30, Minggu 17.00-03.00", address: "Imam Bonjol Jl. Imam Bonjol No.148, Pindrikan Lor, Kec. Semarang Tengah, Kota Semarang, Jawa Tengah 50132",
+                phone: "+62 8112888670", maps: "https://maps.app.goo.gl/zUfh9LF43adCND337?g_st=ic",
+                img: "Red Hare Bar.jpeg", tags: ["Bar", "Live Music", "DJ"]
+            },
+            {
+                id: 16, type: "party", name: "HW Helen’s Night Mart", area: "Candisari",
+                hours: "Senin-Minggu 20.00-04.00", address: "Semarang Jl. Diponegoro No.22A, Tegalsari, Kec. Candisari, Kota Semarang, Jawa Tengah 50251",
+                phone: "+62 8111624898", maps: "https://maps.app.goo.gl/LkZxr6u7Hy7Vww7g6?g_st=ic",
+                img: "Helen's.jpeg", tags: ["Bar", "Lounge", "DJ"]
+            },
+            {
+                id: 17, type: "party", name: "ONYX.ENT", area: "Semarang Utara",
+                hours: "Senin-Minggu 19.00-03.00", address: "Jl. Permata Hijau Blok BB No. 25, Kuningan, Kec. Semarang Utara, Kota Semarang, Jawa Tengah 50176",
+                phone: "+62 81128891212", maps: "https://maps.app.goo.gl/hqBmjLbvjhc9wAAu9?g_st=ic",
+                img: "ONYX.ENT.jpeg", tags: ["Bar", "Karaoke"]
+            }
+        ];
 
-        function filterCategory(category) {
-            currentCategory = category;
-            const body = document.getElementById('main-body');
-            
-            if (category === 'coffee') {
-                body.className = "smooth-scroll font-sans bg-coffeeBg transition-colors duration-300";
-            } else if (category === 'party') {
-                body.className = "smooth-scroll font-sans bg-partyBg transition-colors duration-300";
+        let currentMode = 'coffee';
+        let activeFilters = [];
+        let isAudioPlaying = false;
+
+        // Interactive Custom Cursor
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Loading Performance Handler
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const loader = document.getElementById('loading-screen');
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    document.getElementById('main-content').style.display = 'block';
+                    document.getElementById('audio-widget').style.display = 'flex';
+                    // Reinitialize components
+                    AOS.init({ duration: 1000, once: true });
+                    initSwiper();
+                }, 1000);
+            }, 1200);
+        });
+
+        // Floating Back To Top Button Control
+        const backToTopBtn = document.getElementById("btn-back-to-top");
+        const navbar = document.getElementById("custom-navbar");
+        window.onscroll = function() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                backToTopBtn.classList.add("show");
+                navbar.classList.add("scrolled");
             } else {
-                body.className = "smooth-scroll font-sans bg-gray-50 transition-colors duration-300";
+                backToTopBtn.classList.remove("show");
+                navbar.classList.remove("scrolled");
+            }
+        };
+
+        function scrollToMain() {
+            document.getElementById('main-content').style.display = 'block';
+            window.scrollTo({ top: document.getElementById('directory').offsetTop - 70, behavior: 'smooth' });
+            playAppropriateAudio();
+        }
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+        // Core Mode Architecture switcher
+        function switchMode(mode) {
+            currentMode = mode;
+            activeFilters = [];
+            
+            const body = document.body;
+            const title = document.getElementById('dir-title');
+            const btnCoffee = document.getElementById('btn-coffee-mode');
+            const btnParty = document.getElementById('btn-party-mode');
+
+            if(mode === 'coffee') {
+                body.classList.remove('nightlife-mode');
+                title.textContent = "Hidden Coffee";
+                btnCoffee.classList.add('active');
+                btnParty.classList.remove('active');
+            } else {
+                body.classList.add('nightlife-mode');
+                title.textContent = "Nightlife Spot";
+                btnParty.classList.add('active');
+                btnCoffee.classList.remove('active');
+            }
+            
+            playAppropriateAudio();
+            generateFilterChips();
+            renderCards();
+        }
+
+        // Multimedia Embedded Audio Controllers
+        const audioCafe = document.getElementById('audio-cafe');
+        const audioParty = document.getElementById('audio-party');
+        const audioIcon = document.getElementById('audio-icon');
+        const audioStatus = document.getElementById('audio-status');
+        const audioTrackTitle = document.getElementById('audio-track-title');
+
+        function playAppropriateAudio() {
+            if (!isAudioPlaying) return;
+            if (currentMode === 'coffee') {
+                audioParty.pause();
+                audioCafe.play().catch(()=>{});
+                audioTrackTitle.textContent = "Cafe Ambient Track";
+                audioStatus.textContent = "Status: Playing";
+            } else {
+                audioCafe.pause();
+                audioParty.play().catch(()=>{});
+                audioTrackTitle.textContent = "Nightlife Beat Track";
+                audioStatus.textContent = "Status: Playing";
+            }
+        }
+
+        function toggleAudio() {
+            if (isAudioPlaying) {
+                audioCafe.pause();
+                audioParty.pause();
+                audioIcon.className = "fa-solid fa-play";
+                audioStatus.textContent = "Status: Paused";
+                isAudioPlaying = false;
+            } else {
+                isAudioPlaying = true;
+                audioIcon.className = "fa-solid fa-pause";
+                playAppropriateAudio();
+            }
+        }
+
+        // Dynamically Generate Checkbox Filtering Chips
+        function generateFilterChips() {
+            const container = document.getElementById('filter-chips-container');
+            container.innerHTML = '';
+            
+            // Collect unique tags depending on selected system type
+            let tags = [];
+            placesData.filter(p => p.type === currentMode).forEach(item => {
+                item.tags.forEach(t => { if(!tags.includes(t)) tags.push(t); });
+            });
+
+            tags.forEach(tag => {
+                const chip = document.createElement('div');
+                chip.className = 'filter-chip';
+                chip.innerText = tag;
+                chip.onclick = () => toggleFilter(tag, chip);
+                container.appendChild(chip);
+            });
+        }
+
+        function toggleFilter(tag, element) {
+            if(activeFilters.includes(tag)) {
+                activeFilters = activeFilters.filter(f => f !== tag);
+                element.classList.remove('active');
+            } else {
+                activeFilters.push(tag);
+                element.classList.add('active');
+            }
+            renderCards();
+        }
+
+        // Execution of Search Bar Query input
+        document.getElementById('search-input').addEventListener('input', renderCards);
+
+        // Render Cards based on Filters & Search Inputs
+        function renderCards() {
+            const grid = document.getElementById('cards-grid');
+            const searchQuery = document.getElementById('search-input').value.toLowerCase();
+            grid.innerHTML = '';
+
+            let filtered = placesData.filter(place => place.type === currentMode);
+
+            // Filtering Text Search Query
+            if(searchQuery) {
+                filtered = filtered.filter(p => p.name.toLowerCase().includes(searchQuery) || p.area.toLowerCase().includes(searchQuery));
             }
 
-            const tabs = ['all', 'coffee', 'party'];
-            tabs.forEach(t => {
-                const tabBtn = document.getElementById(`tab-${t}`);
-                if (t === category) {
-                    tabBtn.className = "px-5 py-2 rounded-lg text-sm font-semibold transition bg-white text-gray-900 shadow-sm";
-                } else {
-                    tabBtn.className = "px-5 py-2 rounded-lg text-sm font-semibold transition text-gray-500 hover:text-gray-900";
-                }
+            // Filtering Multi-Checkbox Systems
+            if(activeFilters.length > 0) {
+                filtered = filtered.filter(p => activeFilters.every(f => p.tags.includes(f)));
+            }
+
+            if(filtered.length === 0) {
+                grid.innerHTML = `<div class="col-12 text-center py-5 opacity-70">No hidden gems match your filter criteria.</div>`;
+                return;
+            }
+
+            filtered.forEach(place => {
+                // Formatting exact signature requirement
+                const primaryTag = place.tags.includes("24 Jam") ? "24 Jam" : place.hours.split(' ')[1] || "Open Night";
+                const focusVibe = place.tags.includes("Banyak Colokan") || place.tags.includes("WiFi") ? "WFC Friendly" : place.tags[0];
+
+                const cardHTML = `
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up">
+                        <div class="custom-card">
+                            <div class="card-img-wrapper">
+                                <img src="${place.img}" alt="${place.name}" onerror="this.src='https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=500'">
+                            </div>
+                            <div class="card-body-content">
+                                <h3 class="card-place-title">${place.name}</h3>
+                                <div class="card-info-line"><i class="fa-solid fa-location-dot opacity-60"></i> ${place.area}</div>
+                                <div class="card-info-line"><i class="fa-solid fa-clock opacity-60"></i> ${primaryTag}</div>
+                                <div class="card-info-line"><i class="fa-solid fa-star opacity-60"></i> ${focusVibe}</div>
+                                <div class="card-divider"></div>
+                                <button class="card-action-btn" onclick="openDetailModal(${place.id})">View Details <i class="fa-solid fa-arrow-right-long"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += cardHTML;
             });
-
-            applyFilterAndSearch();
         }
 
-        function searchPlaces() {
-            applyFilterAndSearch();
+        // Modal Data Injections Layout
+        const bootstrapModal = new bootstrap.Modal(document.getElementById('detailModal'));
+        function openDetailModal(id) {
+            const place = placesData.find(p => p.id === id);
+            if(!place) return;
+
+            document.getElementById('modalPlaceName').innerText = place.name;
+            document.getElementById('modalAddress').innerText = place.address;
+            document.getElementById('modalHours').innerText = place.hours;
+            document.getElementById('modalPhone').innerText = place.phone;
+            document.getElementById('modalCategories').innerText = place.tags.join(', ');
+            
+            const mapsBtn = document.getElementById('modalMapsLink');
+            mapsBtn.href = place.maps;
+
+            bootstrapModal.show();
         }
 
-        function applyFilterAndSearch() {
-            const searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
-            const cards = document.querySelectorAll('.place-card');
-
-            cards.forEach(card => {
-                const cardCategory = card.getAttribute('data-category');
-                const cardName = card.getAttribute('data-name');
-                
-                const matchesCategory = (currentCategory === 'all' || cardCategory === currentCategory);
-                const matchesSearch = cardName.includes(searchQuery);
-
-                if (matchesCategory && matchesSearch) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
+        // Swiper Gallery System Components
+        let swiperInstance = null;
+        function initSwiper() {
+            if(swiperInstance) swiperInstance.destroy();
+            swiperInstance = new Swiper(".mySwiper", {
+                effect: "coverflow",
+                grabCursor: true,
+                centeredSlides: true,
+                slidesPerView: "auto",
+                coverflowEffect: {
+                    rotate: 20,
+                    stretch: 0,
+                    depth: 100,
+                    modifier: 1,
+                    slideShadows: true,
+                },
+                pagination: { el: ".swiper-pagination", clickable: true },
+                loop: true
             });
         }
+
+        // First initial setup script runs on runtime load
+        generateFilterChips();
+        renderCards();
     </script>
 </body>
 </html>
